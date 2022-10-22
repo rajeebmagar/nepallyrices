@@ -1,0 +1,14 @@
+<div class="new-embedded-video-wrap">
+<button mat-icon-button class='add-new' (click)='changeToAddMode()' *ngIf='!isAddingNew'>
+    <mat-icon>add</mat-icon> <span>Add Youtube Video</span>
+  </button>
+<form class="example-form" *ngIf='isAddingNew'>
+  <mat-form-field class="width-100-percent">
+    <input matInput placeholder="Youtube video url" [(ngModel)]="youtubeUrl" name="youtubeUrl">
+  </mat-form-field>
+  <div class="button-row width-100-percent">
+    <button mat-raised-button (click)='addNewVideo()' class="btn btn-xs btn-primary">Save</button>
+    <button mat-raised-button (click)='changeToNormalMode()' class="btn btn-xs btn-default">Cancel</button>
+  </div>
+</form>
+</div>

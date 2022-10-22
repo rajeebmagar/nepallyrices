@@ -1,0 +1,33 @@
+<div class="image-selector-wrapper nl-modal" *ngIf="displayImageSelector">
+  <div class="playlist-board" [@displayImageSelector]>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Choose From Existing Photos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="image-selector-content">
+        <div class="thumb" *ngFor="let picture of pictures">
+          <img
+            class="img-responsive thumbnail"
+            src="{{ picture.imageUrl }}"
+            alt=""
+            (click)="pictureSelected(picture)"
+          />
+        </div>
+        <div class="clear-both"></div>
+        <button *ngIf="hasMore" (click)="getMore()">Load More</button>
+      </mat-card-content>
+      <mat-card-actions class="image-selector-actions text-right">
+        <button
+          mat-button
+          (click)="close()"
+          class="btn btn-primary btn-outline"
+        >
+          Cancel
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <button (click)="close()" aria-label="Close" class="box-close-btn"></button>
+</div>
+
+<div class="nl-overlay" *ngIf="displayImageSelector" (click)="close()"></div>

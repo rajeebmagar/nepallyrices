@@ -1,0 +1,57 @@
+<div class="add-playlist-box nl-modal" *ngIf="displayAddToPlaylist">
+  <div class="playlist-board" [@displayAddToPlaylist]>
+    <header>
+      <h4>Add To Playlist</h4>
+      <h3>- {{ songAudio.songIntro?.title }} -</h3>
+    </header>
+    <div class="playlist-listing">
+      <ul *ngIf="audioPlaylists && audioPlaylists.length > 0">
+        <li *ngFor="let audioPlaylist of audioPlaylists">
+          <mat-checkbox
+            color="primary"
+            [checked]="audioPlaylist.isAudioIncluded"
+            (change)="playListSelectionChanged($event, audioPlaylist.playlist)"
+            >{{ audioPlaylist.playlist.title }}</mat-checkbox
+          >
+        </li>
+      </ul>
+    </div>
+    <footer>
+      <a *ngIf="!addNew" mat-button routerLink="." (click)="addNew = true"
+        >Create new playlist</a
+      >
+      <form *ngIf="addNew">
+        <div style="width: 100%; padding: 0 10px; display: inline-block">
+          <mat-form-field style="width: 100%">
+            <input
+              mdInput
+              placeholder="New Playlist Name"
+              name="title"
+              [(ngModel)]="newPlaylist.title"
+            />
+          </mat-form-field>
+          <mat-slide-toggle
+            class="pull-left"
+            [color]="'primary'"
+            style="margin: 6px 0"
+            [checked]="!newPlaylist.private"
+            (change)="newPlaylist.private = !newPlaylist.private"
+          >
+            Public!
+          </mat-slide-toggle>
+          <button
+            type="submit"
+            (click)="createNewPlaylist()"
+            mat-button
+            routerLink="."
+            class="btn-primary pull-right"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </footer>
+  </div>
+  <button (click)="close()" aria-label="Close" class="box-close-btn"></button>
+</div>
+<div class="nl-overlay" *ngIf="displayAddToPlaylist" (click)="close()"></div>

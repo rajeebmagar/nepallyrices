@@ -1,0 +1,60 @@
+<h2 class="rb-title">Create an <span>account</span></h2>
+
+<form class="row nl-form" id="register-form" [formGroup]="registerForm" 
+      (ngSubmit)="onSubmit(registerForm.value)"> 
+    <div *ngIf='modelState.length>0' class="col-md-12">
+      <div  class="alert alert-danger fade in alert-dismissable nl-alert">
+          <!--<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>-->
+          <ul>
+              <li *ngFor='let error of modelState'>
+                  {{error}}
+              </li>
+          </ul>
+          {{error}}
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Email</label>
+        <input type="email" id="email" name="email" class="form-control" formControlName ="email"  placeholder="Enter your email">
+    </div>
+    <div class="form-group col-md-6">
+        <label>Full Name</label>
+        <input type="text" id="fullName" name="fullName" class="form-control" formControlName ="fullName"  placeholder="Enter your full name">
+    </div>
+    
+    
+    <div class="form-group-w">
+         <div class="form-group col-md-6"  >
+            <label >Password </label>
+            <input type="password" id="password" name="password" class="form-control" formControlName ="password"  placeholder="Enter your password">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Confirm Password</label>
+            <input type="password" name="c_password" id="c_password" class="form-control" formControlName ="confirmPassword"  placeholder="Confirm password">
+            <span *ngIf = "registerForm.hasError('confirmPassword')" class="ng-invalid has-error" >Passwords didn't match</span>
+        </div>
+        
+    </div>
+   
+    <div class="form-group col-md-12">
+        <div class="row">
+            <div class="form-group col-md-12">
+                <div class="checkbox">
+                    <label>
+                        <input id="agree" name="agree" type="checkbox" formControlName ="agree" required> 
+                        I agree with terms and conditions.
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-12 text-center">
+        <button type="submit" class="buttonload btn btn-success" [disabled]="!registerForm.valid">
+                <i *ngIf="isRequesting" class="fa fa-circle-o-notch fa-spin"></i>Create an account
+        </button>
+    </div>
+</form>
+<div class="mobile-view switch-btn">
+    <a href="#login" role="tab" data-toggle="tab">Return to Sign in</a>
+</div>

@@ -1,0 +1,17 @@
+<section id="playlist-page">
+<div class="container">
+    <div class="block-heading">
+        <div class="block-heading-lt">
+           <h2 class="block-title">Featured <span>Playlist</span></h2>
+        </div>
+    </div>
+    <div *ngIf='playlists && playlists.length>0'>
+        <ul class="nl_track-inline nl_songs" >
+            <nl-play-list-view-cell [playlist]="playlist" *ngFor='let playlist of playlists'></nl-play-list-view-cell>
+        </ul>
+    </div>
+<div class="margin-tp-bt text-center">
+<a  *ngIf="hasMore" (click)="getMorePlaylists()" class="btn btn-primary btn-outline">View more</a>
+</div>
+</div>
+</section>

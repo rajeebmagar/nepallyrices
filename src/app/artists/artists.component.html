@@ -1,0 +1,24 @@
+<div id="artist-page" class="main-content">
+<nl-top-singers-of-the-day></nl-top-singers-of-the-day>
+<section id="artist-page-lists">
+ <div class="container">
+  <ul class="artist-search-list">
+   <li *ngFor='let vowel of alphabetsVowels'><a [class.active]="query === vowel" (click)="search(vowel)" >{{vowel}}</a></li>   |
+    <li *ngFor='let consonant of alphabetsConsonants'><a [class.active]="query === consonant" (click)="search(consonant)" >{{consonant}}</a></li>  
+  </ul>
+  <div *ngIf="isRequesting">
+        <nl-spinner [isRunning]="isRequesting" class="search-result" [type]="'nl-bounce'" [message]="'Loading...'"></nl-spinner>
+    </div>
+    <div *ngIf="artists && artists.length==0 && !isRequesting" class="search-no-result">
+        No result found
+    </div>
+
+  <ul class="nl-collection_item artists-listings with-hidden-info" *ngIf='artists'>
+       <li class="artist-list" *ngFor='let content of artists | artistIntroToIntroViewContent:artistWithFollowCommandFactory:socialShareCommandsFactoryService'>
+            <nl-home-slick-slider-cell [content]='content' class="artist-cell"></nl-home-slick-slider-cell>
+       </li>
+  </ul>
+  <div class="text-center"> <a *ngIf="hasMore" (click)="getMoreArtists()" class="btn btn-primary btn-outline">View more</a>  </div>
+ </div>
+</section>
+</div>

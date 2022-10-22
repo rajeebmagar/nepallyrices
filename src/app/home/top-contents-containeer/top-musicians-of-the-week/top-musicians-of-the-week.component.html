@@ -1,0 +1,11 @@
+<div class="track__cols top-musicians col-md-4 no-padding">
+  <div class="track__columns-box">
+    <div class="track__heading">
+      <h3 class="track__title">Top <span>Musicians</span> of this week</h3>
+    </div>
+    <nl-intro-list-view *ngIf='musiciansOfTheWeek' 
+      [contents]='musiciansOfTheWeek | artistIntroToIntroViewContent:artistWithFollowCommandFactory:socialShareCommandsFactoryService'
+      [hasMore]='hasMore'
+      (moreData)='getMoreMusicians()'></nl-intro-list-view>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.dialog__close-btn {
+	position: absolute;
+	top: 22px;
+	right: 15px;
+	background: url(../../assets/images/icon-cancel-white.png) no-repeat center;
+}

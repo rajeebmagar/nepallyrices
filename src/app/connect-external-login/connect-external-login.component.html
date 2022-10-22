@@ -1,0 +1,26 @@
+<div class="main-content">
+ <div class="container contect-wrap">
+  <div class="block-heading">
+   <div class="block-heading-lt">
+    <h2 class="block-title"> Connect and login with <span>your favorite social network site credentials.</span> </h2>
+   </div>
+  </div><!--
+  --><ul class="connect-social-wrap">
+   <li>
+    <h4>Facebook - {{facebookConnected?'Connected':''}}</h4>
+    <h6>Connect facebook account</h6>
+    <mat-slide-toggle [checked]="facebookConnected" [disabled]="disabled" (change)='onFacebookConnectChanged($event)'> {{facebookConnected?'Slide to disconnect':'Slide to connect'}} </mat-slide-toggle>
+   </li>
+   <li>
+    <h4>Twitter - {{twitterConnected?'Connected':''}}</h4>
+    <h6>Connect twitter account</h6>
+    <mat-slide-toggle [checked]="twitterConnected" [disabled]="disabled"  (change)='onTwitterConnectChanged($event)'> {{twitterConnected?'Slide to disconnect':'Slide to connect'}} </mat-slide-toggle>
+   </li>
+   <li>
+    <h4>Google  - {{googleConnected?'Connected':''}}</h4>
+    <h6>Google plus account</h6>
+    <mat-slide-toggle [checked]="googleConnected" [disabled]="disabled" (change)='onGoogleConnectChanged($event)'> {{googleConnected?'Slide to disconnect':'Slide to connect'}} </mat-slide-toggle>
+   </li>
+  </ul>
+ </div>
+</div>

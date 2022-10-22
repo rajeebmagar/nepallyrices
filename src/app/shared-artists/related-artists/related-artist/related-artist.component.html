@@ -1,0 +1,18 @@
+<a [routerLink]="['/artists',relatedArtist?.urlFriendlyName]">
+  <div class="nl_track-items">
+    <div class="relatedArtist-image">
+      <img #thumbnailImage src="{{relatedArtist?.image?.imageUrl}}?size={{thumbnailImageSize}}" alt="">
+      <span class="btn-follow-other" (click)='changeFollowing($event)' 
+          [attr.title]="relatedArtist?.isFollowing?'Unfollow':''">
+        <i class="fa" [ngClass]="{'fa-check':relatedArtist?.isFollowing, 'fa-rss':!relatedArtist?.isFollowing}"></i> 
+        {{relatedArtist?.isFollowing?'Following':'Follow'}}
+      </span>
+    </div>
+
+    <div class="nl_track-content">
+      <h2 class="nl_track-title">{{relatedArtist?.name}}</h2>
+      <!--<h3 class="nl_track-subtitle">{{relatedArtist?.name}}</h3>-->
+    </div>
+
+  </div>
+</a>

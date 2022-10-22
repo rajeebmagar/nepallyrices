@@ -1,0 +1,74 @@
+<div
+  class="widget social-media-wrap"
+  *ngIf="(socialMedias && socialMedias.length > 0) || isEditable"
+>
+  <div class="widget-content" *ngIf="socialMedias && socialMedias.length > 0">
+    <div class="sidebar-social-links">
+      <ul>
+        <li *ngFor="let socialMedia of socialMedias">
+          <a
+            href="{{ socialMedia.url }}"
+            target="_blank"
+            class="{{ socialMedia.url | socialMediaCssClass }}"
+          >
+            <i class="{{ socialMedia.url | socialMediaIconCssClass }}"></i>
+            <span>{{ socialMedia.title }}</span>
+          </a>
+          <button
+            mat-icon-button
+            class="remove"
+            (click)="removeSocialMedia(socialMedia)"
+            disableRipple="true"
+            *ngIf="isEditable"
+          >
+            <mat-icon title="remove">cancel</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <button
+    mat-icon-button
+    class="add-new"
+    [ngClass]="{ 'add-new': socialMedias?.length > 0 }"
+    (click)="changeToAddMode()"
+    *ngIf="!isAddingNew && isEditable"
+  >
+    <mat-icon>add</mat-icon>
+    <span>New Social Media</span>
+  </button>
+  <form class="example-form" *ngIf="isAddingNew">
+    <mat-form-field class="width-100-percent">
+      <input
+        mdInput
+        placeholder="Title"
+        [(ngModel)]="newSocialMedia.title"
+        name="title"
+      />
+    </mat-form-field>
+    <mat-form-field class="width-100-percent">
+      <input
+        mdInput
+        placeholder="Url"
+        [(ngModel)]="newSocialMedia.url"
+        name="url"
+      />
+    </mat-form-field>
+    <div class="button-row width-100-percent">
+      <button
+        mat-raised-button
+        (click)="addNewSocialMedia()"
+        class="btn btn-xs btn-primary"
+      >
+        Save
+      </button>
+      <button
+        mat-raised-button
+        (click)="changeToNormalMode()"
+        class="btn btn-xs btn-default"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

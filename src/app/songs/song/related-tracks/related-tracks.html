@@ -1,0 +1,23 @@
+<div class="related-list-header" *ngIf='pagedSongIntros'>
+      <div class="related-list-header-lt">
+            <h3 class="block-title"><span>{{pagedSongIntros?.totalCount}}</span> Song{{pagedSongIntros?.totalCount>1?'s':''}}</h3>
+      </div>
+      <div class="related-list-header-rt">
+        <a (click)='playAll()' class="btn btn-xs btn-text"><i class="fa fa-play"></i> Play All</a>
+       <a (click)='queueAll()' class="btn btn-xs btn-text"><i class="fa fa-plus"></i> Queue All</a>
+      </div>
+</div>
+
+
+
+<div class="block-track-holder">
+
+    <nl-intro-list-view *ngIf='songIntros.length>0' 
+                              [contents]='songIntros | songIntroToIntroViewContent
+                               :songWithAddToQueueCommandFactory
+                               :songIntroCommandsFactoryService' 
+                               [hasMore]='hasMore && showMore' 
+                               (moreData)='getMoreSongs()'>
+    </nl-intro-list-view>
+
+</div>

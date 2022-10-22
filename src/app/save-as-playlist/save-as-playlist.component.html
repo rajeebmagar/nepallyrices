@@ -1,0 +1,41 @@
+<div class="add-playlist-box nl-modal" *ngIf="displaySaveAsPlaylist">
+  <div class="playlist-board" [@displaySaveAsPlaylist]>
+    <header>
+      <h4>Save as a Playlist</h4>
+      <h3>{{ songAudios?.length }} Songs</h3>
+    </header>
+    <form>
+      <div style="width: 100%; padding: 10px 20px; display: inline-block">
+        <mat-form-field style="width: 100%">
+          <input
+            mdInput
+            placeholder="New Playlist Name"
+            name="title"
+            [(ngModel)]="newPlaylist.title"
+          />
+        </mat-form-field>
+        <mat-slide-toggle
+          class="pull-left"
+          [color]="'primary'"
+          style="margin: 6px 0"
+          [checked]="!newPlaylist.private"
+          (change)="newPlaylist.private = !newPlaylist.private"
+        >
+          Public!
+        </mat-slide-toggle>
+        <button
+          type="submit"
+          (click)="createNewPlaylist()"
+          mat-button
+          routerLink="."
+          class="btn-primary pull-right"
+        >
+          Create
+        </button>
+      </div>
+    </form>
+    <footer></footer>
+  </div>
+  <button (click)="close()" aria-label="Close" class="box-close-btn"></button>
+</div>
+<div class="nl-overlay" *ngIf="displaySaveAsPlaylist" (click)="close()"></div>

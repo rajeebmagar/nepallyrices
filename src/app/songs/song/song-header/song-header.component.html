@@ -1,0 +1,352 @@
+<div
+  #coverPicContainer
+  class="nl-track-banner avatar-holder edit-image-wrap-cover"
+  [style.background-image]="
+    uploadedCoverPicture
+      ? 'url(' + uploadedCoverPicture?.imageUrl + ')'
+      : 'url(' + song?.coverPhoto?.imageUrl + ')'
+  "
+  [class.editing]="coverPictureUpdateInProgress"
+  [style.background-position-y.px]="currentCoverPhotoPositionY"
+  (mousedown)="mouseDown($event)"
+  (mouseup)="mouseUp($event)"
+  (mousemove)="mouseMove($event)"
+>
+  <nl-picture-uploader
+    class="btn-edit-image-cover"
+    *ngIf="isEditable"
+    [toolTipText]="'Edit Cover Picture'"
+    [entity]="song"
+    [setPictureService]="setSongCoverPictureService"
+    [getExistingPictureService]="getArtistCoverPicturesService"
+    [existingPictureEntityIds]="existingPictureEntityIds"
+    [imageSelectorService]="imageSelectorService"
+    (uploadedPicture)="coverPictureUploaded($event)"
+    (saved)="coverPictureSaved($event)"
+    (saving)="savingCoverPicture($event)"
+    (editing)="coverPictureWorkInProgress($event)"
+    [enableCropping]="true"
+    [cropHeight]="coverCropHeight"
+    [cropLength]="coverCropWidth"
+    [cropRatio]="coverCropRatio"
+    [defaultImage]="song.coverPhoto"
+    [enableReposition]="true"
+  >
+  </nl-picture-uploader>
+  <div class="nl-track-banner__title">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-lg-3">
+          <div
+            class="banner-album-image edit-image-wrap-profile"
+            [class.editing]="profilePictureUpdateInProgress"
+          >
+            <div #profilepicture class="embedly-responsive avatar">
+              <img
+                src="{{
+                  uploadedProfilePicture
+                    ? uploadedProfilePicture.imageUrl
+                    : song?.profilePicture?.imageUrl
+                }}?size={{ profilePictureSize }}"
+                alt="{{ song.title }}"
+              />
+              <nl-picture-uploader
+                *ngIf="isEditable"
+                class="btn-edit-image-profile"
+                [toolTipText]="'Edit Profile Picture'"
+                [entity]="song"
+                [setPictureService]="setSongProfilePictureService"
+                (uploadedPicture)="profilePictureUploaded($event)"
+                [getExistingPictureService]="getArtistPicturesService"
+                [existingPictureEntityIds]="existingPictureEntityIds"
+                [imageSelectorService]="imageSelectorService"
+                (saved)="profilePictureSaved($event)"
+                [enableCropping]="true"
+                [cropHeight]="profileCropHeight"
+                [cropLength]="profileCropWidth"
+                [cropRatio]="profileCropRatio"
+                [defaultImage]="song?.profilePicture"
+                (editing)="profilePictureWorkInProgress($event)"
+              >
+              </nl-picture-uploader>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-lg-6">
+          <div class="trackTitle-header">
+            <div class="nl-track-title">
+              <h2 class="nl-track-title__track">
+                <div>
+                  <inline-editor
+                    type="text"
+                    title="{{ lyricsTitle }}"
+                    [(ngModel)]="lyricsTitle"
+                    [showEditButton]="true"
+                    [canEdit]="isEditable"
+                    name="lyricsTitle"
+                    [size]="lyricsTitle.length"
+                    (onSave)="saveSongTitle($event)"
+                  >
+                  </inline-editor>
+                </div>
+              </h2>
+              <h3 *ngIf="!editSingers && !editGenres">
+                <nl-comma-separated-anchors
+                  *ngIf="
+                    song.singers && song.singers?.length > 0 && !editSingers
+                  "
+                  [cssClasses]="
+                    'nl-track-title__artist nl-track-title__artist-link'
+                  "
+                  [anchors]="song.singers | artistRolesToAnchors"
+                >
+                </nl-comma-separated-anchors>
+                <button
+                  mat-icon-button
+                  (click)="editModeChange()"
+                  *ngIf="
+                    (!song.singers || song.singers?.length == 0) &&
+                    !editSingers &&
+                    isEditable
+                  "
+                >
+                  <mat-icon>add</mat-icon>
+                  <span>Add Singer/s</span>
+                </button>
+
+                <span
+                  *ngIf="
+                    song.singers &&
+                    song.singers?.length > 0 &&
+                    !editSingers &&
+                    isEditable
+                  "
+                  class="glyphicon glyphicon-pencil"
+                  (click)="editModeChange()"
+                ></span>
+                <span
+                  class="pipe"
+                  *ngIf="song.genres && song.genres?.length > 0"
+                >
+                  |
+                </span>
+                <nl-comma-separated-anchors
+                  *ngIf="song.genres && song.genres.length > 0"
+                  [cssClasses]="
+                    'nl-track-title__artist nl-track-title__artist-link'
+                  "
+                  [anchors]="song.genres | genresToAnchors"
+                >
+                </nl-comma-separated-anchors>
+                <button
+                  mat-icon-button
+                  (click)="editModeChangeForGenre()"
+                  *ngIf="
+                    (!song.genres || song.genres?.length == 0) &&
+                    !editGenres &&
+                    isEditable
+                  "
+                >
+                  <mat-icon>add</mat-icon>
+                  <span>Add Genre/s</span>
+                </button>
+                <span
+                  *ngIf="
+                    song.genres &&
+                    song.genres.length > 0 &&
+                    !editGenres &&
+                    isEditable
+                  "
+                  class="glyphicon glyphicon-pencil"
+                  (click)="editModeChangeForGenre()"
+                ></span>
+              </h3>
+
+              <div *ngIf="editSingers || editGenres">
+                <tag-input
+                  *ngIf="editSingers && isEditable"
+                  [(ngModel)]="song.singers"
+                  [(inputText)]="newSingerName"
+                  theme="bootstrap"
+                  placeholder="Add more singer"
+                  secondaryPlaceholder="Add singer"
+                  [onAdding]="onAddingSinger"
+                  (onAdd)="singerAdded($event)"
+                  (onRemove)="singerRemoved($event)"
+                  [onlyFromAutocomplete]="false"
+                  identifyBy="artistRoleId"
+                  displayBy="artistName"
+                >
+                  <tag-input-dropdown
+                    [autocompleteObservable]="requestAutocompleteSingers"
+                    identifyBy="artistRoleId"
+                    displayBy="artistName"
+                  >
+                    <ng-template let-item="item" let-index="index">
+                      <nl-tag-input-option
+                        [option]="item | artistRoleToTagInputOption"
+                      ></nl-tag-input-option>
+                    </ng-template>
+                  </tag-input-dropdown>
+                </tag-input>
+
+                <tag-input
+                  *ngIf="editGenres && isEditable"
+                  [(ngModel)]="song.genres"
+                  [(inputText)]="newGenreName"
+                  theme="bootstrap"
+                  placeholder="Add more genre"
+                  secondaryPlaceholder="Add genre"
+                  [onAdding]="onAddingGenres"
+                  (onAdd)="genresAdded($event)"
+                  (onRemove)="genresRemoved($event)"
+                  [onlyFromAutocomplete]="false"
+                  identifyBy="genreId"
+                  displayBy="name"
+                >
+                  <tag-input-dropdown
+                    [autocompleteObservable]="requestAutocompleteGenreItems"
+                    identifyBy="genreId"
+                    displayBy="name"
+                  >
+                    <ng-template let-item="item" let-index="index">
+                      <nl-tag-input-option
+                        [option]="item | genreToTagInputOption"
+                      ></nl-tag-input-option>
+                    </ng-template>
+                  </tag-input-dropdown>
+                </tag-input>
+              </div>
+              <div
+                class="vp-count lg-screen"
+                *ngIf="song.status == 'Published'"
+              >
+                <span
+                  *ngIf="songLikesCount > 0"
+                  class="like-count"
+                  (click)="showLikers()"
+                  ><i class="fa fa-heart"></i> {{ songLikesCount }}</span
+                >
+                <span class="pipe" *ngIf="songLikesCount > 0"> | </span>
+                <span class="" *ngIf="pageViewsCount > 0"
+                  ><i class="fa fa-eye"></i> {{ pageViewsCount }} Views</span
+                >
+                <span class="pipe" *ngIf="songPlayCount > 0"> | </span>
+                <span class="" *ngIf="songPlayCount > 0"
+                  ><i class="fa fa-play"></i> {{ songPlayCount }} Plays</span
+                >
+              </div>
+
+              <div class="nl-track-banner-info mobile">
+                <nl-song-artists
+                  *ngIf="song.coverSingers"
+                  [artistsRoles]="song.coverSingers"
+                  [title]="'Performed by:'"
+                ></nl-song-artists>
+                <nl-song-artists
+                  *ngIf="song.lyricists"
+                  [artistsRoles]="song.lyricists"
+                  [title]="'Written by:'"
+                ></nl-song-artists>
+                <nl-song-artists
+                  *ngIf="song.musicians"
+                  [artistsRoles]="song.musicians"
+                  [title]="'Music by:'"
+                ></nl-song-artists>
+              </div>
+            </div>
+          </div>
+          <div class="mini-audio-wrap" *ngFor="let audio of song?.audios">
+            <nl-mini-audio-player
+              [songAudio]="audio"
+              class="mini-audio-holder"
+            ></nl-mini-audio-player>
+            <button
+              mat-icon-button
+              title="Remove Audio"
+              *ngIf="isEditable"
+              class="dialog__close-btn"
+              (click)="removeAudio(audio)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+          <button
+            mat-raised-button
+            class="song-action publish"
+            (click)="publishSong()"
+            *ngIf="song.status == 'Draft'"
+          >
+            <mat-icon>publish</mat-icon>
+            <span>Publish</span>
+          </button>
+          <button
+            mat-raised-button
+            class="song-action spam"
+            (click)="markSongAsSpam()"
+            *ngIf="song.status == 'Published' && isSpamChecker"
+          >
+            <mat-icon>flag</mat-icon>
+            <span>Spam</span>
+          </button>
+          <mat-chip-list>
+            <mat-chip
+              color="accent"
+              selected="true"
+              class="song-action"
+              *ngIf="song.status == 'Spamed'"
+              >Spammed</mat-chip
+            >
+          </mat-chip-list>
+        </div>
+        <div
+          class="col-xs-12 col-sm-1 col-lg-3"
+          *ngIf="song.status == 'Published'"
+        >
+          <div
+            *ngIf="!this.liked"
+            class="ng-like-wrapper"
+            (click)="likeSong(song)"
+          >
+            <i class="fa fa-heart"></i>
+            <span>Like </span>
+          </div>
+          <div
+            *ngIf="this.liked"
+            class="ng-like-wrapper-liked"
+            (click)="unLikeSong(song)"
+          >
+            <i class="fa fa-heart" title="unlike"></i>
+            <span>Liked </span>
+          </div>
+          <div class="vp-count mobile-screen">
+            <span
+              *ngIf="songLikesCount > 0"
+              class="like-count"
+              (click)="showLikers()"
+              ><i class="fa fa-heart"></i> {{ songLikesCount }}</span
+            >
+            <span class="pipe" *ngIf="songLikesCount > 0"> | </span>
+            <span class="" *ngIf="pageViewsCount > 0"
+              ><i class="fa fa-eye"></i> {{ pageViewsCount }}</span
+            >
+            <span class="pipe" *ngIf="songPlayCount > 0"> | </span>
+            <span class="" *ngIf="songPlayCount > 0"
+              ><i class="fa fa-play"></i> {{ songPlayCount }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="editingCoverPicture" class="drag-to-position">
+    <mat-icon>drag_handle</mat-icon>
+    <span>Drag to Repositon Cover</span>
+  </div>
+</div>
+
+<nl-user-intro-list
+  [pagedSongLikers]="pagedSongLikers"
+  [(displayUserIntroList)]="displayUserIntroList"
+></nl-user-intro-list>

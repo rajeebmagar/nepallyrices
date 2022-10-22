@@ -1,0 +1,6 @@
+<ul class="track__list">
+  <nl-intro-view-cell [content]='content' *ngFor='let content of contents' 
+                      [thumbnailSize]="70"  class="intro-view-cell" ></nl-intro-view-cell>
+</ul>
+
+<a class="track_view-btn" *ngIf="hasMore" (click)="askForMoreData()">View more</a>

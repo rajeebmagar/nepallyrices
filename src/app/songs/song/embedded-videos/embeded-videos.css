@@ -1,0 +1,12 @@
+.remove-embedded-video.dialog__close-btn {
+	position: absolute;
+    right: 0;
+    top: -43px;
+	opacity: 0;
+}
+.widget.iframe:hover .remove-embedded-video.dialog__close-btn {
+	opacity: 0.4;
+}
+.widget.iframe:hover .remove-embedded-video.dialog__close-btn:hover {
+	opacity: 1;
+}

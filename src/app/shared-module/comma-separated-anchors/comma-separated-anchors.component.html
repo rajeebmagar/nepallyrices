@@ -1,0 +1,4 @@
+<a class="{{cssClasses}}" *ngFor='let anchor of anchors; let isLast = last' 
+                                [innerHtml]='anchor.title + (!isLast? seperator + "&nbsp;":"")' 
+                                [routerLink]='anchor.url' 
+                                [ngClass]='{"non-link":!anchor.url}'></a>

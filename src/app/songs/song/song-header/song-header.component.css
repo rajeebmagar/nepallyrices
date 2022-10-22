@@ -1,0 +1,184 @@
+.ng-like-wrapper, .ng-like-wrapper-liked {
+	height: 36px;
+	position: absolute;
+	top: 187px;
+	left: 15px;
+	padding: 9px 15px;
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+	color: #aeaeae;
+	text-align: center;
+	cursor: pointer;
+}
+.ng-like-wrapper:hover, .ng-like-wrapper-liked {
+	color: #fff;
+}
+.ng-like-wrapper span, .ng-like-wrapper-liked span {
+	display: inline-block;
+	margin-left: 5px;
+	font-size: 12px;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+.ng-like-wrapper .fa, .ng-like-wrapper-liked .fa {
+	display: inline-block;
+	font-size: 18px;
+	vertical-align: middle;
+}
+.pipe {
+	color: rgba(255, 255, 255, 0.7);
+	font-family: serif;
+	font-size: 18px;
+	padding: 0 4px;
+}
+.ng-like-wrapper-liked .fa {
+	color: #1a8de9;
+}
+
+
+.glyphicon {
+	margin-left: 5px;
+	color: rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	font-size: 14px;
+}
+.glyphicon:hover {
+	color: rgba(255, 255, 255, 1);
+}
+.nl-track-title .glyphicon.glyphicon-pencil {
+	display: none;
+}
+.nl-track-title:hover .glyphicon.glyphicon-pencil {
+	display: inline-block;
+}
+
+
+.ng-tns-c30-6 {
+	display: inline-block;
+}
+.song-action {
+	position: absolute;
+	top: 187px;
+	right: -229px;
+	text-transform: uppercase;
+}
+.publish, .spam {
+	background-color: #26b14b;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 100;
+	box-shadow: none;
+}
+.spam {
+	background-color: orangered;
+}
+.btn-edit-image-profile {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-align: center;
+}
+.btn-edit-image-profile .btn {
+	margin-top: 10px;
+}
+
+
+.mini-audio-wrap:hover .dialog__close-btn {
+	opacity: 1;
+}
+
+.dialog__close-btn.mat-icon-button {
+	width: 24px;
+    height: 24px;
+	position: absolute;
+    top: -24px;
+    right: 15px;
+	background: url(../../../../assets/images/icon-cancel-white.png) no-repeat center;
+	background-size: 16px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+	opacity: 0;
+}
+.mini-audio-wrap:hover .dialog__close-btn.mat-icon-button {
+	opacity: 1;
+}
+.vp-count span {
+	color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+}
+
+.vp-count.mobile-screen {
+	display: none;
+	position: absolute;
+    right: 15px;
+    top: 177px;
+}
+.ng-like-count-wrapper{
+	position: absolute;
+    left: auto;
+    right: 175px;
+    top: 195px;
+	color: white;
+	cursor: pointer;
+}
+.like-count {
+	cursor: pointer;
+}
+.vp-count .like-count:hover {
+	color: rgba(255,255,255,1);
+}
+
+@media (max-width: 1199px) {
+.ng-like-wrapper, .ng-like-wrapper-liked {
+	position: absolute;
+	left: auto;
+	right: 15px;
+}
+.ng-like-wrapper span, .ng-like-wrapper-liked span {
+	display: none;
+}
+.song-action {
+    position: absolute;
+    right: 0;
+    top: 187px;
+}
+}
+@media (max-width: 991px) {
+.song-action {
+    position: absolute;
+    right: 20px;
+    top: 187px;
+}
+}
+@media (max-width: 767px) {
+.ng-like-wrapper, .ng-like-wrapper-liked {
+	height: auto;
+	padding: 5px 10px;
+	position: absolute;
+	top: 171px;
+	left: 15px;
+	right: auto;
+}
+
+.publish, .spam {
+	min-width: auto;
+    height: auto;
+    line-height: 24px;
+    padding: 3px 10px;
+}
+.song-action {
+    position: absolute;
+    top: 146px;
+	right: auto;
+	left: 68px;
+}
+.vp-count.lg-screen {
+	display: none;
+}
+.vp-count.mobile-screen {
+	display: block;
+}
+}

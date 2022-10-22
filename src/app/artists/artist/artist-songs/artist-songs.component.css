@@ -1,0 +1,37 @@
+
+
+.song-list-header {
+	width: 100%;
+	display: inline-block;	
+	margin-bottom: 10px;
+}
+
+.song-list-header-lt {
+	float: left;
+}
+.song-list-header-rt {
+	float: right;
+}
+.song-list-header-lt .block-title {
+	margin: 0;
+}
+.song-list-header-lt .btn, .song-list-header-rt .btn {
+	color: #333;
+	margin: 0;
+	padding: 5px 0 5px 5px;
+}
+.song-list-header-lt .btn:hover, .song-list-header-rt .btn:hover {
+	color: #2189f7;
+}
+
+
+@media (max-width: 600px) { 
+	.song-list-header-lt, .song-list-header-rt {
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.song-list-header-rt { 
+		background-color: #ddd;
+		padding: 3px;
+	}
+}

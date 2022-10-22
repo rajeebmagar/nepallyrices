@@ -1,0 +1,87 @@
+<div class="nl-artist-banner edit-image-wrap-cover" 
+     [class.editing]="coverPictureUpdateInProgress"
+            [style.background-image]="uploadedCoverPicture? 'url(' + uploadedCoverPicture?.imageUrl+ ')':  'url(' + artistProfile.coverPhoto?.imageUrl + ')'"
+    [style.background-position-y.px]="currentCoverPhotoPositionY" 
+                         (mousedown)='mouseDown($event)' 
+                           (mouseup)='mouseUp($event)'
+                         (mousemove)='mouseMove($event)'>
+    <div class="nl-track-banner__title">
+        <div class="container">
+            <div class="profile-info">
+                <div class="profile-head-link">
+                    <div class="profile-image edit-image-wrap-profile" [class.editing]="profilePictureUpdateInProgress">
+                        <img src="{{uploadedProfilePicture?uploadedProfilePicture.imageUrl : artistProfile.profilePicture?.imageUrl}}?size=174" alt="">
+                        <nl-picture-uploader #profileImageUploader *ngIf="isEditable" 
+                                             class="btn-edit-image-profile" 
+                                             [toolTipText]="'Edit Profile Picture'" 
+                                             [entity]='artistProfile' 
+                                             [setPictureService]='setArtistProfilePictureService'
+                                             [getExistingPictureService]='getArtistPicturesService'
+                                             [existingPictureEntityIds]='existingPictureEntityIds'
+                                             [imageSelectorService]='imageSelectorService'
+                                             (uploadedPicture)='profilePictureUploaded($event)' 
+                                             [enableCropping]="true"
+                                             [cropHeight]="profileCropHeight"
+                                             [cropLength]="profileCropWidth"
+                                             [cropRatio]="profileCropRatio"
+                                             [defaultImage]="artistProfile.profilePicture"
+                                             (saved)='profilePictureSaved($event)'
+                                             (editing)='profilePictureWorkInProgress($event)'>
+                        </nl-picture-uploader>
+                    </div>
+                    <div class="profile-data">
+                        <h2 class="profile-title">
+                            <inline-editor type="text" 
+                                           [(ngModel)]="artistProfile.fullName"
+                                           name="fullName"
+                                           [canEdit]="isEditable"
+                                           [size] = "artistProfile.fullName.length"
+                                           (onSave) = 'updateArtistName()' 
+                                           showEditButton = "true">
+                            </inline-editor>
+                        </h2>
+                        
+                        <h4 class="profileHeaderInfo__additional" *ngIf="!artistProfile.address && !artistProfile.address ">{{artistProfile.address?.homeCountry }} {{artistProfile.address?.homeTown }}</h4>
+                        <ul class="genres" *ngIf='artistProfile.genres || artistProfile.roles'>
+                            <li *ngFor='let genre of artistProfile.genres'><a [routerLink]="['/genres',genre]" title="genre">{{genre}}</a></li>
+                            <li *ngFor='let role of artistProfile.roles'><a class="non-link" title="role">{{role}}</a></li>
+                        </ul>
+                        <div class="vp-count">
+                        	<span *ngIf="pageViewsCount && pageViewsCount!='0'"><i class="fa fa-eye"></i> {{pageViewsCount}} views</span>
+                        </div>
+                        <div class="profile-button-group">
+                            <button title="{{following?'Unfollow':'Follow'}}" class="btn btn-default btn-outline" (click)='toggleFollowArtist()'>
+                              <span [ngClass]="{'fa fa-check': following}">  
+                              </span>
+                                  {{following?'Following':'Follow'}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nl-picture-uploader class="btn-edit-image-cover" *ngIf="isEditable"
+        [toolTipText]="'Edit Cover Picture'" 
+        [entity]='artistProfile' 
+        [setPictureService]='setArtistCoverPictureService'
+        [getExistingPictureService]='getArtistCoverPicturesService'
+        [existingPictureEntityIds]='existingPictureEntityIds'
+        [imageSelectorService]='imageSelectorService'
+        (uploadedPicture)='coverPictureUploaded($event)' 
+        (saved)='coverPictureSaved($event)' 
+        (saving)='savingCoverPicture($event)'
+        (editing)='coverPictureWorkInProgress($event)'
+        [enableCropping]="true"
+        [cropHeight]="coverCropHeight"
+        [cropLength]="coverCropWidth"
+        [cropRatio]="coverCropRatio"
+        [defaultImage]="artistProfile.coverPhoto"
+        [enableReposition]="true">
+    </nl-picture-uploader>
+    <div *ngIf='editingCoverPicture' class="drag-to-position">
+    	<mat-icon>drag_handle</mat-icon>
+    	<span>Drag to Repositon Cover</span>
+    </div>
+</div>

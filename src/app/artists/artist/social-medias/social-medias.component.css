@@ -1,0 +1,36 @@
+.social-media-wrap .mat-icon-button {
+    width: 100%;
+	padding: 0 10px;
+	background-color: #e0e0e0;
+    border-radius: 3px;
+    color: #333;
+}
+
+.add-new {
+    display: none;
+	margin-top: 15px
+}
+.social-media-wrap:hover .add-new {
+	display: block;
+}
+.sidebar-social-links .remove.mat-icon-button{
+    width: auto;
+	height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+	display: none;
+    line-height: 20px;
+}
+.sidebar-social-links li:hover{
+    background-color: whitesmoke;
+}
+.sidebar-social-links li:hover .mat-icon-button{
+    display: block;
+	background: none;
+}
+
+.social-media-wrap .example-form {
+	margin-top: 15px;
+}

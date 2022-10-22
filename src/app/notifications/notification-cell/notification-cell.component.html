@@ -1,0 +1,19 @@
+<li [ngClass]="{'not-read':!notification.readByUser, 'read':notification.readByUser}" 
+    class="track__holder" tabindex="1" (click)='markAsReadAndNavigate()'>
+  <div class="track__image">
+    <a (click)='markAsRead()' routerLink="{{'/'+notification.actor.userName}}">
+      <img src="{{notification.actor.profilePicture?.imageUrl}}?size=48" alt="{{notification.actor.fullName}}">
+    </a>
+  </div>
+  <div class="track__description">
+    <a (click)='markAsRead()' routerLink="{{'/'+notification.actor.userName}}" class="track__title">{{notification.actor.userName}} </a>
+    <p>{{notification | notificationToTitle }}</p>
+    <a (click)='markAsRead()' routerLink="{{notification | notificationToUrl}}">
+      {{notification.objectTitle}}</a>
+    <span>{{notification.notificationMoment}}</span>
+  </div>
+  <div class="notification-image">
+      <a (click)='markAsRead()' routerLink="{{notification | notificationToUrl}}">
+        <img src="{{notification.objectImage?.imageUrl}}?size=48" alt="{{notification.objectTitle}}"></a>
+    </div>
+</li>

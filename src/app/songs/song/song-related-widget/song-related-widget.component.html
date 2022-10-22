@@ -1,0 +1,14 @@
+<div class="widget" *ngIf='relatedSongs.length>0'>
+  <div class="widget-header">
+    <h3 class="widget-title">Related Songs</h3>
+    <a (click)='requestToShowAll()' class="btn btn-xs btn-text pull-right">Show All</a>
+  </div>
+  <div class="widget-content" *ngIf='relatedSongs?.length>0'>
+    <ul class="track__list">
+      <nl-intro-view-cell [thumbnailSize]="40" [content]='content' *ngFor='let content of relatedSongs | songIntroToIntroViewContent
+                                               :songWithAddToQueueCommandFactory
+                               :songIntroCommandsFactoryService'></nl-intro-view-cell>
+    </ul>
+
+  </div>
+</div>

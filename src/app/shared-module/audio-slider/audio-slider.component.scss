@@ -1,0 +1,75 @@
+@import '~@angular/material/theming';
+
+// Define a mixin that accepts a theme and outputs the color styles for the component.
+@mixin audio-slider-component($theme) {
+  .mat-slider-horizontal {
+	  width:100%;
+  }
+  .mat-slider-horizontal .mat-slider-wrapper {
+	left: 0;  
+  }
+  .mat-slider-thumb, .mat-slider-thumb-label, .mat-slider-track-fill{
+	background-color: #fff;
+    
+  }
+  .mat-slider {
+	cursor: pointer;  
+  }
+  .mat-slider-thumb{
+	  right: -20px;
+      cursor: pointer;
+      background-color: #fff;
+      opacity: 0;
+  }
+  .mat-slider-horizontal:hover .mat-slider-thumb, .mat-slider-wrapper:hover .mat-slider-thumb {
+      opacity: 1;
+  }
+  .mat-slider-track-background{
+      background-color: rgba(255,255,255,0.2);
+  }
+  .mat-slider:hover .mat-slider-track-background, .mat-slider-active .mat-slider-track-background {
+	  background-color: rgba(255,255,255,0.2);  
+  }
+  .mat-slider-min-value:hover:not(.mat-slider-thumb-label-showing) .mat-slider-thumb, .mat-slider-min-value.mat-slider-active:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+	background-color: rgba(255, 255, 255, 0.2);
+    border-color: transparent;
+  }
+  @media (max-width: 992px) {
+.master-song-progress .mat-slider-horizontal {
+    height: 30px;
+    min-width: 128px;
+    padding: 0;
+}
+.master-song-progress .mat-slider-horizontal .mat-slider-wrapper {
+    height: 2px;
+    left: 8px;
+    right: 8px;
+    top: 12px;
+}
+.master-song-progress .buffer-master-audio-player {
+    left: 8px;
+    max-width: 96%;
+    top: 12px;
+}
+}
+}
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$candy-app-primary: mat-palette($mat-indigo);
+$candy-app-accent:  mat-palette($mat-grey, 600, 400, 800);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Using the $theme variable from the pre-built theme you can call the theming function
+@include audio-slider-component($candy-app-theme);
+@include mat-slider-theme($candy-app-theme);
+

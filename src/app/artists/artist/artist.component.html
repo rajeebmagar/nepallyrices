@@ -1,0 +1,201 @@
+<div class="main-content" *ngIf="artistProfile">
+  <nl-artist-header
+    [isEditable]="isEditable"
+    [artistProfile]="artistProfile"
+    (tabSelected)="tabIndexChanged($event)"
+    (followersChanged)="followersChanged()"
+  ></nl-artist-header>
+  <div class="nl__artists-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-12">
+          <mat-tab-group [(selectedIndex)]="currentTabIndex">
+            <mat-tab label="Overview" class="tab-pane">
+              <div
+                class="nl_block-box"
+                id="overview"
+                *ngIf="artistProfile?.overview"
+              >
+                <div class="nl_block-header">
+                  <h2 class="tab-title">Biography</h2>
+                </div>
+                <div class="nl_block-content">
+                  <p [innerHTML]="artistProfile?.overview"></p>
+                  <a
+                    (click)="showBiography()"
+                    class="btn btn-xs btn-text pull-right"
+                    >Full Biography</a
+                  >
+                </div>
+              </div>
+              <div *ngIf="!artistProfile?.overview && isEditable">
+                <div class="nl_block-header">
+                  <h2 class="tab-title">Biography Not Available</h2>
+                  <a (click)="showBiography()" class="btn btn-xs btn-text"
+                    >Write Biography</a
+                  >
+                </div>
+              </div>
+              <div class="nl_block-box">
+                <nl-artist-popular-songs (showAllSongs)="showSongs()">
+                </nl-artist-popular-songs>
+              </div>
+            </mat-tab>
+            <mat-tab
+              label="Songs"
+              class="tab-pane"
+              *ngIf="artistProfile.songsCount > 0"
+            >
+              <nl-artist-songs> </nl-artist-songs>
+            </mat-tab>
+            <mat-tab
+              label="Related Artists"
+              class="tab-pane"
+              *ngIf="hasRelatedArtist"
+            >
+              <nl-related-artists
+                [relatedArtistsActivated]="currentTabIndex == 2"
+              ></nl-related-artists>
+            </mat-tab>
+            <mat-tab
+              label="Biography"
+              class="tab-pane"
+              *ngIf="artistProfile?.overview || isEditable"
+            >
+              <h3>Overview</h3>
+              <div class="text-details-edit">
+                <inline-editor
+                  type="textarea"
+                  [css]="'nl-lyrics__content'"
+                  [(ngModel)]="artistProfile.overview"
+                  name="overview"
+                  [canEdit]="isEditable && !wikipediaExtractBiography"
+                  [size]="artistProfile.overview?.length"
+                  (onSave)="updateBiography()"
+                  showEditButton="true"
+                  cols="95"
+                  [max]="300"
+                  [rows]="getLineCount(artistProfile.overview) + 1"
+                >
+                </inline-editor>
+              </div>
+              <h3>Biography</h3>
+
+              <div class="text-details-edit">
+                <inline-editor
+                  type="textarea"
+                  [css]="'nl-lyrics__content'"
+                  [(ngModel)]="artistProfile.biography"
+                  name="biography"
+                  [canEdit]="isEditable && !wikipediaExtractBiography"
+                  [size]="artistProfile.biography?.length"
+                  (onSave)="updateBiography()"
+                  showEditButton="true"
+                  cols="95"
+                  [rows]="getLineCount(artistProfile.biography) + 1"
+                >
+                </inline-editor>
+              </div>
+            </mat-tab>
+            <mat-tab
+              label="Followers"
+              class="tab-pane"
+              *ngIf="artistProfile.followersCount > 0"
+            >
+              <nl-artist-followers
+                [artistId]="artistProfile.artistProfileId"
+                [artistFollowersActivated]="currentTabIndex == 4"
+              ></nl-artist-followers>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 nl-sidebar">
+          <div class="userInfoBar__buttons">
+            <share-buttons
+              [tumblr]="false"
+              [reddit]="false"
+              [pinterest]="false"
+              [linkedIn]="false"
+              [count]="true"
+              [totalCount]="true"
+              [stumbleUpOn]="false"
+              [google]="false"
+              [description]="shareArgs?.description"
+              [shareTitle]="mainTitle"
+              [image]="shareArgs?.image"
+              [tags]="shareArgs?.tags"
+            ></share-buttons>
+          </div>
+          <div
+            class="widget"
+            *ngIf="
+              artistProfile.followersCount > 0 || artistProfile.songsCount > 0
+            "
+          >
+            <div class="widget-content">
+              <div class="infoStats">
+                <ul>
+                  <li
+                    class="infoStats__stat"
+                    (click)="showSongs()"
+                    *ngIf="artistProfile.songsCount > 0"
+                  >
+                    <span class="infoStats__value">{{
+                      artistProfile.songsCount
+                    }}</span>
+                    <h3 class="infoStats__title">Songs</h3>
+                  </li>
+                  <li
+                    class="infoStats__stat"
+                    (click)="showFollowers()"
+                    *ngIf="artistProfile.followersCount > 0"
+                  >
+                    <span class="infoStats__value">{{
+                      artistProfile.followersCount
+                    }}</span>
+                    <h3 class="infoStats__title">Followers</h3>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="widget">
+            <div class="widget-content">
+              <div class="last-update">
+                <span class="first">LAST UPDATE ON:</span>
+                <span>{{ artistProfile.lastUpdatedDate | toDate | date }}</span>
+              </div>
+              <div class="contributors">
+                <h3 class="contributors-title">Contributed by:</h3>
+                <a [routerLink]="['/', artistProfile.owner.userName]">
+                  <div class="contributors-profile">
+                    <div
+                      class="contributors-profile-img"
+                      [style.background-image]="
+                        'url(' +
+                        artistProfile.owner.profilePicture?.imageUrl +
+                        '?size=40)'
+                      "
+                    ></div>
+                    <span class="contributor-name">{{
+                      artistProfile.owner.fullName
+                    }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <nl-social-medias
+            [isEditable]="isEditable"
+            [artistId]="artistProfile.artistProfileId"
+          ></nl-social-medias>
+          <nl-related-artists-widget
+            (showAll)="showRelatedArtists()"
+            (hasRelatedArtist)="hasRelatedArtistChange($event)"
+            *ngIf="hasRelatedArtist"
+          ></nl-related-artists-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

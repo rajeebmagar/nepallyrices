@@ -1,0 +1,50 @@
+<div class="main-content">
+  <div class="nl__artists-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-md-7 col-sm-12">
+          <h1>Publicize Nepalyrics Songs on Publish</h1>
+          <ul style="list-style: none;">
+            <li>
+              <div class="row">
+                <div class="col-md-8">
+                  <h4>Facebook</h4>
+                  <h6>Share published song to news feed.</h6>
+                </div>
+                <div class="col-md-4" style="padding-top:4px;">
+                  <section>
+                    <mat-slide-toggle [checked]="facebookPageConnected" (change)='onFacebookConnectChanged($event)'>
+                      {{facebookPageConnected?'Slide to disconnect':'Slide to connect'}}
+                    </mat-slide-toggle>
+                  </section>
+                </div>
+              </div>
+
+            </li>
+            <li>
+              <div class="row">
+                <div class="col-md-8">
+                  <h4>Twitter</h4>
+                  <h6>Share published song to twitter feed.</h6>
+                </div>
+                <div class="col-md-4" style="padding-top:4px;">
+                  <section>
+                    <mat-slide-toggle [checked]="twitterConnected" (change)='onTwitterConnectChanged($event)'>
+                      {{twitterConnected?'Slide to disconnect':'Slide to connect'}}
+                    </mat-slide-toggle>
+                  </section>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-12 nl-sidebar">
+        </div>
+      </div>
+
+      <nl-facebook-pages [displayFacebookPages]='displayFacebookPages' [accessToken]='accessToken' (facebookPageSelected)='facebookPageSelected($event)'>
+
+      </nl-facebook-pages>
+    </div>
+  </div>
+</div>

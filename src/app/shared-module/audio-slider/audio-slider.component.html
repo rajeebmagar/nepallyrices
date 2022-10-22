@@ -1,0 +1,14 @@
+<div class="player-progress-row">
+<div class="player-inline-time" [ngClass]="{'show-duration':currentTime>0}">{{currentTime | minutesColonSeconds}}</div>
+<div class="player-progress-wrap">
+       <mat-slider min="0" max="{{duration}}" step="0.5" [(ngModel)]="currentTime"
+                  (change)="seekAudioPlayerTo($event)" 
+                  (input)="sliderThumbMoving($event)" 
+                  [disabled]='disabled'>
+       </mat-slider>
+       <span class="progress-track-remainder track-loaded" [ngClass]="bufferCss"
+            [style.width.%]='getPercentByDuration(bufferedTime)'>
+       </span>
+</div>
+<div class="player-inline-duration"  [ngClass]="{'show-duration':currentTime>0}">{{duration | minutesColonSeconds}}</div>
+</div>

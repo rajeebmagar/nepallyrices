@@ -1,0 +1,40 @@
+<div>
+  <div *ngIf='uploadCoverPictureInProgress'>
+    <div class="progress" style="width:100%;">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+        [style.width.%]="uploadedCoverPictureProgress">
+        {{uploadedCoverPictureProgress}}%
+      </div>
+    </div>
+  </div>
+  <div class=" picture-upload-component" *ngIf='!uploadCoverPictureInProgress && !savingCoverPicture'>
+    <button mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true" *ngIf='!uploadCoverPictureInProgress && !savingCoverPicture'>
+        <mat-icon>camera_alt</mat-icon>
+        <span>{{toolTipText}}</span>
+      </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)='openFileDialog()'>
+          <mat-icon>file_upload</mat-icon>
+          <span>upload photo</span>
+          <input #fileInput type="file" style="display:none" (change)="coverPictureSelected($event)">
+        </button>
+        <button mat-menu-item *ngIf='existingPictureEntityIds && existingPictureEntityIds.length>0' (click)='chooseExistingImage()'>
+          <mat-icon>image</mat-icon>
+          <span>Choose Existing Photos</span>
+        </button>
+        <button mat-menu-item *ngIf='enableCropping && defaultImage' (click)='cropExistingImage()'>
+          <mat-icon>crop</mat-icon>
+          <span>crop</span>
+        </button>
+      <button mat-menu-item *ngIf='enableReposition  && defaultImage' (click)='prepareForReposition()'>
+          <mat-icon>drag_handle</mat-icon>
+          <span>repositon</span>
+        </button>
+    </mat-menu>
+  </div>
+
+
+  <div *ngIf='savingCoverPicture'>
+    <button class="btn btn-primary btn-xs" (click)='setCoverPicture()'>Save</button>
+    <button class="btn btn-default btn-xs" (click)='cancelsetCoverPictureUpdate()'>Cancel</button>
+  </div>

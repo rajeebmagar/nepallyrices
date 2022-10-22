@@ -1,0 +1,298 @@
+<script>
+  document.write('<base href="' + location.href + '">');
+</script>
+
+<div [@displayKaraoke] *ngIf="displayKaraoke" class="dialog karaoke-dialog">
+  <div
+    class="dialog-blur"
+    [ngStyle]="{
+      'background-image': 'url(' + currentCoverImage?.imageUrl + ')'
+    }"
+  ></div>
+  <button
+    (click)="close()"
+    aria-label="Close"
+    class="dialog__close-btn"
+  ></button>
+
+  <div class="popup-brand navbar-brand" href="#">
+    <span class="frontHero__logo">Nepalyrics</span>
+  </div>
+  <div class="container karaoke-modal">
+    <div class="row">
+      <div class="col-sm-3 col-md-5">
+        <div id="song-info">
+          <h4>
+            <a [routerLink]="['/songs', songAudio.song.urlFriendlyTitle]"
+              >{{ songAudio?.song?.title }}
+            </a>
+          </h4>
+          <h5>
+            <nl-comma-separated-anchors
+              *ngIf="songAudio.song.singers"
+              [cssClasses]="
+                'nl-track-title__artist nl-track-title__artist-link'
+              "
+              [anchors]="songAudio.song.singers | artistRolesToAnchors"
+            >
+            </nl-comma-separated-anchors>
+          </h5>
+          <div class="track-other-artist">
+            <nl-song-artists
+              *ngIf="
+                songAudio.song.coverSingers &&
+                songAudio.song.coverSingers.length > 0
+              "
+              [artistsRoles]="songAudio.song.coverSingers"
+              [title]="'Performed by:'"
+            >
+            </nl-song-artists>
+          </div>
+          <div class="track-other-artist">
+            <nl-song-artists
+              [title]="'Written by:'"
+              [artistsRoles]="songAudio.song.lyricists"
+              *ngIf="songAudio.song.lyricists"
+            >
+            </nl-song-artists>
+          </div>
+          <div class="track-other-artist">
+            <nl-song-artists
+              [title]="'Music by:'"
+              [artistsRoles]="songAudio.song.musicians"
+              *ngIf="songAudio.song.musicians"
+            >
+            </nl-song-artists>
+          </div>
+          <div class="track-other-links" style="margin-bottom: 10px">
+            <span *ngIf="songAudio.song.genres">Genres:</span>
+            <nl-comma-separated-anchors
+              *ngIf="songAudio.song.genres"
+              [anchors]="songAudio.song.genres | genresToAnchors"
+            >
+            </nl-comma-separated-anchors>
+          </div>
+          <div
+            class="contributors contributors-links"
+            style="margin-bottom: 10px"
+          >
+            <span>Contributed by:</span>
+            <a [routerLink]="['/', songAudio.song.owner.userName]">
+              <span style="margin-left: 5px">{{
+                songAudio.song.owner.fullName
+              }}</span>
+            </a>
+          </div>
+          <div class="vp-count">
+            <span *ngIf="karaokePlayCount && karaokePlayCount != '0'">
+              <i class="fa fa-eye"></i> {{ karaokePlayCount }} views</span
+            >
+          </div>
+          <div class="karoke-image">
+            <img
+              src="{{ currentCoverImage?.imageUrl }}"
+              alt="{{ songAudio.song?.title }}"
+            />
+          </div>
+
+          <div class="sync-wrap">
+            <div class="col-sm-7 col-md-5">
+              <nl-share-song
+                [song]="songAudio?.song"
+                lyrical="true"
+              ></nl-share-song>
+            </div>
+            <div id="sync-buttons">
+              <button
+                (click)="publishKaraoke()"
+                *ngIf="isLyricSynchronizing && isEditable"
+                class="btn btn-success"
+              >
+                Publish
+              </button>
+              <button
+                (click)="reSynchronizeKaraoke()"
+                *ngIf="!isLyricSynchronizing && isEditable && mouseMoving"
+                class="btn btn-success"
+              >
+                Re-Sync
+              </button>
+              <button
+                (click)="synchronizeKaraoke()"
+                *ngIf="!isLyricSynchronizing && isEditable && mouseMoving"
+                class="btn btn-success"
+              >
+                Sync
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9 col-md-7">
+        <div id="music-bars" *ngIf="isPlaying">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <h5 class="karaoke-info" *ngIf="isLyricSynchronizing">
+          click on lyric line while playing song
+        </h5>
+
+        <div id="lyric-container">
+          <ul>
+            <li
+              *ngFor="let lyricKaraokeLine of lyricKaraoke?.lyricKaraokeLines"
+              id="{{ lyricKaraokeLine.lyricKaraokeLineId }}"
+              [class.karaoke-playing]="
+                lyricKaraokeLine.lyricKaraokeLineId === activeLineId
+              "
+            >
+              <span (mousedown)="onKaraokeLineSelected(lyricKaraokeLine)">{{
+                lyricKaraokeLine.lyricLine
+              }}</span>
+              <input
+                *ngIf="isLyricSynchronizing"
+                type="number"
+                value="{{ lyricKaraokeLine.time }}"
+              />
+              <button
+                *ngIf="isLyricSynchronizing"
+                (click)="removeLine(lyricKaraokeLine)"
+                type="button"
+                class="btn btn-danger"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="audio-controls" class="karaoke-sound-player">
+      <div class="row">
+        <div class="col-sm-7 col-md-6 col-lg-8">
+          <nl-audio-slider
+            class="player-inline-status"
+            [currentTime]="currentTime"
+            [duration]="duration"
+            [bufferedTime]="bufferedTime"
+            (change)="seekAudioPlayerTo($event)"
+            (sliding)="sliding($event)"
+            [bufferCss]="'buffer-karaoke-audio-player'"
+            [disabled]="isIdle"
+          ></nl-audio-slider>
+        </div>
+        <div class="col-sm-5 col-md-6 col-lg-4">
+          <div class="playbackControlsContainer">
+            <div class="playbackControls">
+              <!--To Remove Unwanted White-space created by display inline-block -->
+
+              <div class="main-switch">
+                <button
+                  (click)="likeSong()"
+                  class="btn btn-karaoke-controls fa fa-heart-o"
+                  [ngClass]="{
+                    'fa-heart-o': !isSongLiked,
+                    'fa-heart active': isSongLiked
+                  }"
+                  [attr.title]="isSongLiked ? 'Unlike song' : 'Like song'"
+                ></button>
+                <!--
+              -->
+                <button
+                  (click)="playPrevious()"
+                  class="btn btn-karaoke-controls fa fa-step-backward"
+                  [disabled]="!hasPrevious"
+                ></button>
+                <!--
+              -->
+                <button
+                  (click)="onPlayStateChanged()"
+                  class="btn btn-karaoke-play fa"
+                  [ngClass]="{ 'fa-pause': isPlaying, 'fa-play': !isPlaying }"
+                ></button>
+                <!--
+              -->
+                <button
+                  (click)="playNext()"
+                  class="btn btn-karaoke-controls fa fa-step-forward"
+                  [disabled]="!hasNext"
+                ></button>
+              </div>
+
+              <div class="other-switch">
+                <button
+                  (click)="showAudioPlayList()"
+                  class="btn btn-karaoke-controls fa fa-list-ul"
+                  title="Play List"
+                ></button>
+                <!--
+              -->
+                <button
+                  (click)="toggleLoopPlayList()"
+                  class="btn btn-karaoke-controls fa fa-retweet"
+                  [ngClass]="{ active: playListLoop }"
+                  title="Loop Play List"
+                ></button>
+                <!--
+              -->
+                <button
+                  (click)="toggleLoopSong()"
+                  class="btn btn-karaoke-controls fa fa-repeat"
+                  [ngClass]="{ active: songLoop }"
+                  title="Loop Song"
+                ></button>
+                <!--
+              -->
+                <button
+                  (click)="togglePlayRandom()"
+                  class="btn btn-karaoke-controls fa fa-random"
+                  [ngClass]="{ active: playRandom }"
+                ></button>
+                <!--
+              -->
+                <div class="volume-control-wrap dropup">
+                  <button
+                    type="button"
+                    class="btn btn-karaoke-controls fa fa-volume-up dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  ></button>
+                  <div class="dropdown-menu">
+                    <input
+                      id="volume-control"
+                      type="range"
+                      [(ngModel)]="volume"
+                      min="0"
+                      max="1"
+                      step="any"
+                      (change)="changeVolume($event)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

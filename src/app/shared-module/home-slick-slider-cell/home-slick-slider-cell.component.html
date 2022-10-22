@@ -1,0 +1,73 @@
+<a [routerLink]="content.url">
+  <div
+    #thumbnailImage
+    class="track-cover-img"
+    [ngClass]="{ 'context-menu-active': optionMenuDisplayed || isPlaying }"
+  >
+    <img
+      *ngIf="content.thumbnailUrl && thumbnailImageSize > 0"
+      [src]="
+        content.thumbnailUrl
+          ? content.thumbnailUrl + '?size=' + thumbnailImageSize
+          : ''
+      "
+      alt="{{ content.title }}"
+    />
+    <div class="overlay-actions">
+      <div class="overlay-action-buttons">
+        <!--quick-command-section-->
+        <span
+          *ngIf="content.quickCommand"
+          class="btn btn-quick-add"
+          type="button"
+          title="{{
+            content.quickCommand.command.isExecuted
+              ? content.quickCommand.command.executedTitle
+              : content.quickCommand.command.title
+          }}"
+          (click)="executeQuickCommand($event)"
+        >
+          <i
+            class="{{
+              content.quickCommand.command.isExecuted
+                ? content.quickCommand.cssForExecuted
+                : content.quickCommand.css
+            }}"
+            aria-hidden="true"
+          >
+          </i>
+        </span>
+
+        <!--audio-player-section-->
+        <nl-tiny-audio-player
+          *ngIf="content.songAudio"
+          [songAudio]="content.songAudio"
+          (playStateChange)="changedPlayingState($event)"
+        >
+        </nl-tiny-audio-player>
+
+        <!--option-commands-section-->
+        <nl-option-menu
+          *ngIf="content.optionCommands"
+          [commands]="content.optionCommands"
+          (optionMenuDisplayChanged)="optionMenuDisplayChanged($event)"
+        >
+        </nl-option-menu>
+      </div>
+    </div>
+  </div>
+
+  <div class="track-info">
+    <a [routerLink]="content.url" class="title">{{ content.title }}</a>
+    <nl-comma-separated-anchors
+      class="track-artist"
+      *ngIf="content.anchors"
+      [anchors]="content.anchors"
+    ></nl-comma-separated-anchors>
+    <span *ngIf="content.subtitles">
+      <span class="artist-name" *ngFor="let subtitle of content.subtitles">
+        {{ subtitle }}
+      </span>
+    </span>
+  </div>
+</a>

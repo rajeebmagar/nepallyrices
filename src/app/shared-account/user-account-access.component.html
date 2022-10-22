@@ -1,0 +1,30 @@
+<div class="user-account-box nl-modal" *ngIf='displayUserAccount'>
+  <div class="login-board" [@displayUserAccount]>
+    <header class="dashboard-header">
+      <div class="main-nav" *ngIf="!showForgotPassword">
+        <ul>
+          <li role="presentation" [ngClass]='{active:!displayRegisterTab}'><a role="tab" data-toggle="tab" (click)='displayRegisterTab=false'>Login</a></li>
+          <li role="presentation" [ngClass]='{active:displayRegisterTab}'><a role="tab" data-toggle="tab" (click)='displayRegisterTab=true'>Register</a></li>
+
+        </ul>
+      </div>
+    </header>
+    <div class="tab-content">
+      <div *ngIf='!showForgotPassword' role="tabpanel" class="tab-pane" [ngClass]='{active:!displayRegisterTab}' id="login">
+        <nl-user-login (onUserLoggedIn)='close()' 
+                       (onForgotPasswordClicked)='showForgotPassword=true'></nl-user-login>
+      </div>
+      <div *ngIf='!showForgotPassword' role="tabpanel" class="tab-pane register-board" [ngClass]='{active:displayRegisterTab}'
+        id="register">
+        <nl-user-register (onUserRegistered)='close()' ></nl-user-register>
+    </div>
+    <div *ngIf="showForgotPassword" role="tabpanel" class="tab-pane active">
+      <nl-forgot-password (havePasswordClicked)='showForgotPassword=false'></nl-forgot-password>
+    </div>
+  </div>
+</div>
+
+<button (click)="close()" aria-label="Close" class="dialog__close-btn" *ngIf='displayUserAccount'></button>
+</div>
+<div class="nl-overlay" *ngIf='displayUserAccount' (click)="close()">
+</div>

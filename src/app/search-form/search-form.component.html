@@ -1,0 +1,21 @@
+<div (focusout)="focusOut()">
+  <form class="search-form" (ngSubmit)="onSubmit()" #f="ngForm" autocomplete="off">
+  <div class="transparent-search" [class.show]="showSearchBar" (click)="hideSearchBarInMobile()"> </div>
+    <input #searchinput (focusout)="inputFocusOut()"  type="text" [formControl]="query" [class.show]="showSearchBar"  class="form-control searchForm__input" placeholder="Type song title, artist or lyrics"
+       aria-label="Search"  (focus)="focusIn()" >
+    <button class="headerSearch__submit submit" type="submit">
+        <span class="fa fa-search"></span>
+    </button>
+  </form>
+  <div class="search-options"> 
+    <span *ngIf="noResult" class="text-center">No result found</span>  
+    <span *ngIf="isRequesting">                        
+      <nl-spinner [isRunning]="isRequesting" class="search-box" [type]="'nl-spin'" [message]=""></nl-spinner>      
+    </span>
+    <div *ngIf="searchResult && searchResult.size>0">
+      <div *ngFor='let item of searchResult | mapValues | slice:0:9; let isLast = last'>
+        <span [ngClass]="isLast?last:t" (click)='onOptionClick(item.key)'>{{item.val}}</span>
+      </div>
+    </div>
+  </div>
+</div>

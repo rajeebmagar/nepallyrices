@@ -1,0 +1,29 @@
+.public-btn-wrap, .count-wrap {
+	display: inline-block;
+	vertical-align: middle;
+}
+.mat-icon-button .mat-icon, .mat-icon-button i {
+    line-height: 24px;
+}
+.public-btn-wrap .mat-icon-button {
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+}
+.playlist-accessibility{
+    color: rgba(255, 255, 255, 0.7);
+}
+.playlist-accessibility:hover{
+    color: #1a8de9;
+}
+.count-wrap .title-count {
+	height: auto;
+	margin-bottom: 0;
+	color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+}
+.related-list-header {
+	width: 100%;
+	display: inline-block;	
+	margin-bottom: 10px;
+}

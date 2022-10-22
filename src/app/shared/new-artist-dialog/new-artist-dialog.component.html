@@ -1,0 +1,29 @@
+<h2>Add New {{addNewArtistCommand.role}}</h2>
+<mat-dialog-content>
+    <form (ngSubmit)="addNewArtist()">
+        <mat-form-field>
+            <mat-label>Artist Name</mat-label>
+            <input matInput placeholder="Artist Name" name="name" type="text" [formControl]="artistNameFormControl" />
+            <mat-error *ngIf="artistNameFormControl.hasError('pattern')">Special characters not allowed (@, $ etc.)</mat-error>
+        </mat-form-field>
+        <button mat-raised-button [disabled]="!artistNameFormControl.valid" color="primary" type="submit"
+            style="display: inline; margin-left: 5px;">
+            <mat-icon aria-hidden="false" aria-label="Add artist icon">add</mat-icon>
+            Add
+        </button>
+    </form>
+
+    <section *ngIf='similarNamedArtists'>
+        <h3 class="track__title">Similar named <span>{{addNewArtistCommand.role}}s</span></h3>
+        <mat-list>
+            <mat-list-item *ngFor="let artist of similarNamedArtists">
+                <img *ngIf="artist.profilePicture" matListAvatar src="{{artist.profilePicture?.imageUrl}}?size=50"
+                    alt="{{artist.artistName}}">
+                <h3 matLine> {{artist.artistName}} </h3>
+            </mat-list-item>
+        </mat-list>
+    </section>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

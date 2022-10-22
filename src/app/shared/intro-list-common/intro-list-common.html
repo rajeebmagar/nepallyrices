@@ -1,0 +1,31 @@
+<div class="widget-content">
+        <ul class="nl__sidebar-track-list no-style-list  track__list">
+            <li class="nl__sidebar-track-items track__holder" *ngFor='let introContent of introContents'>
+                <a href="javascript:void(0)" (click)="onClick(introContent?.url)"  routerLinkActive="active">
+                    <div class="track__image">
+                        <img src="{{introContent?.thumbnailUrl}}" alt="...">
+                        <div class="overlay-actions">
+       						<div class="overlay-action-buttons"> <span class="play"></span> </div>
+      					</div>
+                    </div>
+                 </a>   
+                    <div class="track__description">
+                        <h4 class="nl__sidebare-track-title track__title"><a href="javascript:void(0)" (click)="onClick(introContent?.url)"  routerLinkActive="active" class="nl_media">{{introContent?.title}}</a></h4>
+                        <!--<h5 class="nl__sidebare-track-subtitle">{{introContent.singers | concatString}}</h5>-->
+                        <div class="dropup">
+                        <span class="btn btn-add-to" data-toggle="dropdown" title="More Options" type="button"> <i  aria-hidden="true" class="glyphicon glyphicon-option-vertical"></i> </span>
+                        <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    </div>
+                
+            </li>
+
+        </ul>
+    </div>
+

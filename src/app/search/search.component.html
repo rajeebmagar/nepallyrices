@@ -1,0 +1,64 @@
+<div class="album innerpage">
+    <!-- search content -->
+    <div class="main-content">
+        <div class="search-results">
+            <div class="container">
+                <div class="block-heading" *ngIf="!isRequesting">
+                    <div class="block-heading-lt">
+                        <h2 class="block-title">
+                            Search results for
+                            <span>{{displayMessage}}</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="search-wrap">
+                <div class="container">
+                    <div *ngIf="isRequesting">
+                        <nl-spinner [isRunning]="isRequesting" class="search-result" [type]="'nl-bounce'" [message]="'Searching...'"></nl-spinner>
+                    </div>
+                    <div *ngIf="songIntros?.length==0 && artistIntros?.length==0 && !isRequesting" class="search-no-result">
+                        No result found
+                    </div>
+
+
+                    <div *ngIf="songIntros?.length>0 || artistIntros?.length>0" class="search-content ng-animate">
+                        <div class="search-items-songs" *ngIf="!isArtistSearch">
+                            <div class="song-list-header" *ngIf='pagedSongIntros'>
+                                <div class="song-list-header-lt">
+                                    <h3 class="block-title"><span>{{pagedSongIntros?.totalCount}}</span> Song{{pagedSongIntros?.totalCount>1?'s':''}}</h3>
+                                </div>
+                                <div class="song-list-header-rt">
+                                    <a (click)='playAll()' class="btn btn-xs btn-text"> <i class="fa fa-play" _ngcontent-c1=""></i> Play All</a>
+
+
+                                    <a (click)='queueAll()' class="btn btn-xs btn-text"><i class="fa fa-plus" _ngcontent-c1=""></i> Queue All</a>
+                                </div>
+                            </div>
+                            <nl-intro-list-view *ngIf='songIntros' [contents]='songIntros |songIntroToIntroViewContent:songWithAddToQueueCommandFactory:songIntroCommandsFactoryService'
+                                [hasMore]='hasMoreSong' (moreData)='getMoreSongs()'></nl-intro-list-view>
+                        </div>
+                        <div class="search-items-artists" id="artist-page">
+                            <section id="artist-page-lists">
+                                <div class="search__items-heading">
+                                    <h3 class="block-title"><span>{{pagedArtistIntros?.totalCount}}</span> Artist{{pagedArtistIntros?.totalCount>1?'s':''}}</h3>
+                                </div>
+                                <!-- <nl-intro-list-view *ngIf='artistIntros' [contents]='artistIntros |artistIntroToIntroViewContent' [hasMore]='hasMoreArtist'
+                                    (moreData)='getMoreArtists()'></nl-intro-list-view> -->
+                                 <ul class="nl-collection_item artists-listings with-hidden-info" *ngIf='artistIntros'>
+                                <li class="artist-list" *ngFor='let content of artistIntros | artistIntroToIntroViewContent:artistWithFollowCommandFactory:socialShareCommandsFactoryService'>
+                                    <nl-home-slick-slider-cell [content]='content'></nl-home-slick-slider-cell>
+                                </li>
+                            </ul>
+                            <div class="text-center"> <a *ngIf="hasMoreArtist" (click)="getMoreArtists()" class="btn btn-primary btn-outline">View more</a>  </div> 
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.search results -->
+
+    </div>
+
+</div>

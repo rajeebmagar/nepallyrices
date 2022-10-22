@@ -1,0 +1,73 @@
+.hero-about-us {
+	width: 100%;
+	min-height: 400px;
+	background: url(../../../assets/images/hero-about.jpg) no-repeat center -100px;
+	background-attachment: fixed;
+}
+h2.block-title {
+	font-size: 2.2vw;
+}
+.lyrics-ft-wrap h2.block-title, .responsive-wrap h2.block-title {
+	color: #fff;
+}
+.social-connect {
+    margin-top: 30px;
+}
+.social-connect a {
+	width: 44px;
+	height: 44px;
+	display: inline-block;
+	margin-right: 5px;
+	padding: 9px 5px;
+	border-radius: 3px;
+	text-align: center;
+}
+.social-connect a:hover {
+	opacity: 0.7;
+}
+.social-connect .fa {
+	color: #fff;
+	font-size: 24px;
+}
+.facebook {
+	background-color: #3b5998;
+}
+.twitter {
+	background-color: #55acee;
+}
+.instagram {
+	background-color: #000;
+}
+.facebook i, .twitter i, .instagram i, .youtube i {
+	background: none;
+}
+.youtube {
+	background-color: #ce1312;
+}
+.google-plus {
+	background-color: #dc4a38;
+}
+
+@media(max-width:991px) {
+h2.block-title {
+	font-size: 24px;
+}
+}
+
+@media(max-width:767px) {
+.hero-about-us {
+	min-height: 270px;
+	background-size: 900px auto;
+	background-position: center;
+	background-attachment: scroll;
+}
+.section-padding {
+	padding: 60px 20px;
+}
+.show-box {
+	margin-bottom: 20px;
+}
+.social-connect a {
+	margin-right: 3px;
+}
+}

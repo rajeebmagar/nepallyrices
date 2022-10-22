@@ -1,0 +1,16 @@
+<div class="notification-board">
+  	<h4>Your Notifications</h4>
+    <div class="notification-list-wrap">
+      <ul class="notification-list" (scroll)="notificationScrolled($event)">
+        <nl-notification-cell [notification]="notification" (markedAsRead)='emitMarkedAsRead()' *ngFor='let notification of notifications'>
+        </nl-notification-cell>
+      </ul>
+    </div>
+    <div class="margin-tp-bt text-center">
+      <span *ngIf="loadingMoreNotifications">loading..</span>
+      <span *ngIf="hasMore && !loadingMoreNotifications">scroll to load more</span>
+    </div>
+  </div>
+<!--  <button (click)="close()" aria-label="Close" class="box-close-btn"></button>-->
+<!--<div class="nl-overlay-transparent" (click)="close()">
+</div>-->

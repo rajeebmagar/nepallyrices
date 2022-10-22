@@ -1,0 +1,201 @@
+<div class="main-content" *ngIf='userProfile'>
+    <nl-user-account-header [userProfile]='userProfile' [canEdit]='canEdit'  (tabSelected)='tabIndexChanged($event)'></nl-user-account-header>
+    <div class="nl__artists-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <mat-tab-group [(selectedIndex)]='currentTabIndex'>
+                        <mat-tab label="Overview" class="tab-pane">
+                            <div class="nl_block-box">
+                                <div>
+                                    <div class="nl_block-header">
+                                        <h2 class="tab-title">About {{userProfile.firstName}}</h2>
+                                    </div>
+                                    <div class="text-details-edit">
+                                        <inline-editor type="textarea" [(ngModel)]="userProfile.aboutMe" (onSave)="saveProfileUpdate($event,'aboutMe')" name="userProfile.aboutMe"
+                                            cols="100" empty="" rows="4" [canEdit]="canEdit" showEditButton="true" [fnErrorLength]="myHandleError"></inline-editor>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="nl_block-header">
+                                        <h2 class="tab-title">Detail</h2>
+                                    </div>
+                                    <div class="user-detail">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        First Name
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.firstName" (onSave)="saveProfileUpdate($event,'firstName')" name="userProfile.firstName"
+                                                            empty="" [canEdit]="canEdit" showEditButton="true" [fnErrorLength]="myHandleError">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Middle Name
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.middleName" (onSave)="saveProfileUpdate($event,'middleName')" name="userProfile.middleName"
+                                                            empty="" [canEdit]="canEdit" showEditButton="true" [fnErrorLength]="myHandleError">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Last Name
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.lastName" (onSave)="saveProfileUpdate($event,'lastName')" name="userProfile.lastName"
+                                                            empty="" [canEdit]="canEdit" [showEditButton]="true" [fnErrorLength]="myHandleError">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="canEdit">
+                                                    <td style="width:150px;">
+                                                        Date of Birth
+                                                    </td>
+                                                    <td style="width:200px;">
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.dateOfBirth" (onSave)="saveProfileUpdate($event,'dateOfBirth')" name="userProfile.dateOfBirth"
+                                                            empty="" [canEdit]="canEdit" showEditButton="true" [fnErrorLength]="myHandleError">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Gender
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.gender" (onSave)="saveProfileUpdate($event,'gender')" name="userProfile.gender"
+                                                            empty="" [canEdit]="canEdit" showEditButton="true" [fnErrorLength]="myHandleError">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Home City
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.address.homeTown" (onSave)="saveProfileUpdate($event,'address.homeTown')"
+                                                            name="userProfile.address.homeTown" empty="" [canEdit]="canEdit"
+                                                            [showEditButton]="true">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Current City
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.address.currentTown" (onSave)="saveProfileUpdate($event,'address.currentTown')"
+                                                            name="userProfile.address.currentTown" empty="" [canEdit]="canEdit"
+                                                            [showEditButton]="true">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Home Country
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.address.homeCountry" (onSave)="saveProfileUpdate($event,'address.homeCountry')"
+                                                            name="userProfile.address.homeCountry" empty="" [canEdit]="canEdit"
+                                                            [showEditButton]="true">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Current Country
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.address.currentCountry" (onSave)="saveProfileUpdate($event,'address.currentCountry')"
+                                                            name="userProfile.address.homeCountry" empty="" [canEdit]="canEdit"
+                                                            [showEditButton]="true">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="canEdit">
+                                                    <td>
+                                                        Email
+                                                    </td>
+                                                    <td>
+                                                        <inline-editor type="text" [(ngModel)]="userProfile.emailAddress" (onSave)="saveProfileUpdate($event,'address.emailAddress')"
+                                                            name="userProfile.address.emailAddress" empty="" [canEdit]="canEdit"
+                                                            [showEditButton]="true">
+                                                        </inline-editor>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Following" class="tab-pane">
+                            <div class="nl_block-header">
+                                <h3 class="block-title">Artist Following</h3>
+                            </div>
+                            <div class="nl_block-content">
+                                <nl-related-artists [type]="'artist-following'" [userProfile]='userProfile' [relatedArtistsActivated]="currentTabIndex==1"></nl-related-artists>
+                            </div>
+                            <div class="nl_block-header">
+                                <h3 class="block-title">User Following</h3>
+                            </div>
+                            <div class="nl_block-content">
+                                <nl-user-account-followers-following [type]="'userFollowing'" [userProfile]='userProfile' [followersActivated]="currentTabIndex==1"></nl-user-account-followers-following>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Followers" class="tab-pane">
+                            <div class="nl_block-header">
+                                <h3 class="block-title">Followers</h3>
+                            </div>
+                            <div class="nl_block-content">
+                                <nl-user-account-followers-following type="followers"  [userProfile]='userProfile' [followersActivated]="currentTabIndex==2"></nl-user-account-followers-following>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Contributions" class="tab-pane">
+                            <!--<div class="nl_block-header">
+                                <h2 class="tab-title">Contributions</h2>
+                            </div>-->
+                            <div class="nl_block-content">
+                                <nl-song-contribution-list [userName]='userProfile.userName' [inProgress]="false">
+                                </nl-song-contribution-list>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 nl-sidebar">
+                    <div class="widget" *ngIf="userProfile.followingCount>0 || userProfile.followersCount>0">
+                        <div class="widget-content">
+                            <div class="infoStats">
+                                <ul>
+                                    <li class="infoStats__stat" (click)='showFollowing()' *ngIf='userProfile.followingCount>0'>
+                                        <span class="infoStats__value">{{userProfile.followingCount}}</span>
+                                        <h3 class="infoStats__title">Following</h3>
+                                    </li>
+                                    <li class="infoStats__stat" (click)='showFollowers()' *ngIf='userProfile.followersCount>0'>
+                                        <span class="infoStats__value">{{userProfile.followersCount}}</span>
+                                        <h3 class="infoStats__title">Followers</h3>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- in progress song list -->
+                    <nl-song-widget *ngIf="canEdit" [widgetTitle]="'In Progress'" [URL]="inProgressSongURL"></nl-song-widget>
+                    <!--<nl-social-medias></nl-social-medias>-->
+                    <nl-play-list-widget *ngIf="canEdit" [playListType]="'private'" [enablePagination]="true"></nl-play-list-widget>
+
+                    <!--<nl-play-list-widget [playListType]="'public'" [enablePagination]="true"></nl-play-list-widget>-->
+                    <nl-song-widget *ngIf="canEdit" [widgetTitle]="'Songs Liked'" [URL]="userLikedSongURL"></nl-song-widget>
+                    <!--<nl-related-artists-widget (showAll)='showRelatedArtists()'></nl-related-artists-widget>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

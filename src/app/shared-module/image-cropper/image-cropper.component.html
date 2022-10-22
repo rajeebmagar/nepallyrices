@@ -1,0 +1,27 @@
+<div class="image-cropper-wrapper nl-modal" *ngIf="displayImageCropper">
+  <div class="playlist-board" [@displayImageCropper]>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Create Profile Picture</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div #imagecropper class="image-cropper"></div>
+      </mat-card-content>
+      <mat-card-actions class="image-crop-actions text-right">
+        <button mat-button (click)="save()" class="btn btn-primary">
+          Done
+        </button>
+        <button
+          mat-button
+          (click)="close()"
+          class="btn btn-primary btn-outline"
+        >
+          Cancel
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <button (click)="close()" aria-label="Close" class="box-close-btn"></button>
+</div>
+
+<div class="nl-overlay" *ngIf="displayImageCropper" (click)="close()"></div>

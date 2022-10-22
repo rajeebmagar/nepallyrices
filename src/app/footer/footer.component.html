@@ -1,0 +1,65 @@
+<footer class="site-footer" [class.bottom-margin]="displayingAudioPlayer">
+  <div class="container">
+    <div class="nl-footer__artist-index">
+      <ul class="artist__list">
+        <li *ngFor="let vowel of alphabetsVowels">
+          <a [routerLink]="['/search', vowel, 'artist']">{{ vowel }}</a>
+        </li>
+        |
+        <li *ngFor="let consonant of alphabetsConsonants">
+          <a [routerLink]="['/search', consonant, 'artist']">{{ consonant }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="footer-nav">
+          <nl-site-links></nl-site-links>
+        </div>
+        <p class="site-info">© {{ currentYear }} Nepalyrics. version 1.5.3</p>
+      </div>
+      <div class="col-md-6">
+        <div class="social-network">
+          <ul>
+            <li class="fb-widget">
+              <div
+                class="fb-like"
+                data-href="https://www.facebook.com/nepalyrics/"
+                data-layout="button_count"
+                data-action="like"
+                data-size="small"
+                data-show-faces="true"
+                data-share="true"
+              ></div>
+            </li>
+            <li class="">
+              <a target="_blank" href="https://www.facebook.com/nepalyrics/"
+                ><span class="facebook s-icons"></span
+              ></a>
+            </li>
+            <li class="">
+              <a target="_blank" href="https://twitter.com/nepalyrics/"
+                ><span class="twitter s-icons"></span
+              ></a>
+            </li>
+            <li class="">
+              <a target="_blank" href="https://instagram.com/nepalyrics/"
+                ><span class="instagram s-icons"></span
+              ></a>
+            </li>
+            <!-- <li class="">
+                            <a href="#"><span class="soundcloud s-icons"></span></a>
+                        </li> -->
+            <li class="">
+              <a
+                target="_blank"
+                href="https://www.youtube.com/channel/UCkMHxTU6ROG7uY18RSyUIyg"
+                ><span class="youtube s-icons"></span
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

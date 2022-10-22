@@ -1,0 +1,35 @@
+.related-list-header {
+	width: 100%;
+	display: inline-block;	
+	margin-bottom: 10px;
+}
+
+.related-list-header-lt {
+	float: left;
+}
+.related-list-header-rt {
+	float: right;
+}
+.related-list-header-lt .block-title {
+	margin: 0;
+}
+.related-list-header-lt .btn, .related-list-header-rt .btn {
+	color: #333;
+	margin: 0;
+	padding: 5px 0 5px 5px;
+}
+.related-list-header-lt .btn:hover, .related-list-header-rt .btn:hover {
+	color: #2189f7;
+}
+
+
+@media (max-width: 600px) { 
+	.related-list-header-lt, .related-list-header-rt {
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.related-list-header-rt { 
+		background-color: #ddd;
+		padding: 3px;
+	}
+}

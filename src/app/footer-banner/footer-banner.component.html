@@ -1,0 +1,15 @@
+<section class="signupModule">
+	<div class="container">
+            <div class="text-center">
+                <h3>Join in. <span>Enjoy Nepali music</span></h3>
+                <h4>Love tracks, follow artists and build playlists. All for free.</h4>
+                <section *ngIf="!user">
+                    <button (click)="showRegister()" class="btn btn-primary btn-register">Create Account</button>
+                    <div>
+                        Already have an account?
+                        <button (click)="showLogin()" class="btn btn-default btn-transparent btn-sign-in">Sign in</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+</section>

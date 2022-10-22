@@ -1,0 +1,32 @@
+<div class="inner-page-default">
+<div class="main-content">
+  <div class="nl__artists-content">
+    <div class="container" style="margin-bottom: 15px;">
+      <div class="row">
+        <div class="col-md-9">
+            <div class="inner-page-box">
+            <div class="block-heading" *ngIf='pagedSongIntros'>
+              <div class="block-heading-lt">
+                   <h2 class="block-title"><span>{{searchFor | uppercase }}</span> {{name}}</h2>
+                   <h5>{{pagedSongIntros?.totalCount}} Song{{pagedSongIntros?.totalCount>1?'s':''}}</h5>
+              </div>
+              <div class="block-heading-rt">
+                <a (click)='playAll()' class="btn btn-xs btn-text"><i class="fa fa-play"></i> Play All</a>
+               <a (click)='queueAll()' class="btn btn-xs btn-text"><i class="fa fa-plus"></i> Queue All</a>
+              </div>
+            </div>
+              <nl-intro-list-view *ngIf='songIntros' [contents]='songIntros | 
+                                      songIntroToIntroViewContent:songWithAddToQueueCommandFactory:songIntroCommandsFactoryService'
+                [hasMore]='hasMore' (moreData)='getMoreSongIntros()'>
+              </nl-intro-list-view>
+             </div> 
+        </div>
+        <div class="col-md-3 nl-sidebar">
+              <nl-play-list-widget [playListType]="'public'" [enablePagination]="true">
+              </nl-play-list-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

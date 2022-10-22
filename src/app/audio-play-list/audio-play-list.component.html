@@ -1,0 +1,17 @@
+<div class="nl-modal master-play-list" [@displayAudioPlayList] *ngIf='displayAudioPlayList'>
+ <button (click)="close()" aria-label="Close" class="dialog__close-btn"></button>
+ <header class="playlist-header">
+  <h3><i class="fa fa-music" aria-hidden="true"></i> Song Playlist</h3>
+  <div class="btn-group-up">
+   <button class="btn btn-primary btn-outline" (click)='saveAsPlayList()'>Save as Playlist</button>
+   <button class="btn btn-default btn-outline" (click)='clear()'>Clear</button>
+  </div>
+ </header>
+ <div class="play-list-wrap">
+  <ul class="track__list">
+    <nl-intro-view-cell [thumbnailSize]="40" [content]='content' *ngFor='let content of songIntros | songIntroToIntroViewContent
+                                                                                :songWithLikeCommandFactory
+                                                                                :songPlayListCommandsFactoryService'></nl-intro-view-cell>
+  </ul>
+ </div>
+</div>

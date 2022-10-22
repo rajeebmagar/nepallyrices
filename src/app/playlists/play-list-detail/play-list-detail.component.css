@@ -1,0 +1,34 @@
+
+.playlist-list-header {
+	width: 100%;
+	display: inline-block;	
+	margin-bottom: 10px;
+}
+.playlist-list-header-lt {
+	float: left;
+}
+.playlist-list-header-rt {
+	float: right;
+}
+.playlist-list-header-lt .block-title {
+	margin: 0;
+}
+.playlist-list-header-lt .btn, .playlist-list-header-rt .btn {
+	color: #333;
+	margin: 0;
+}
+.playlist-list-header-lt .btn:hover, .playlist-list-header-rt .btn:hover {
+	color: #2189f7;
+}
+
+
+@media (max-width: 600px) { 
+	.playlist-list-header-lt, .playlist-list-header-rt {
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.playlist-list-header-rt { 
+		background-color: #ddd;
+		padding: 3px;
+	}
+}

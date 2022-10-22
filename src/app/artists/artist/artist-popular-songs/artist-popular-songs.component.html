@@ -1,0 +1,10 @@
+
+<nl-artist-songs 
+                 [showMore]="false" 
+                 [showCount]="false"
+                 (hasSongChange)='onSongAvailable($event)'
+                 [titleSpan]="'Most popular'"
+                 [title]="'Songs'">
+</nl-artist-songs>
+
+<a *ngIf='hasSong' (click)='requestToShowAllSong()' class="btn-show">Show All Songs</a>

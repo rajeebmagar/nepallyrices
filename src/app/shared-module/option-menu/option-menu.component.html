@@ -1,0 +1,11 @@
+<div class="dropup">
+  <span class="btn btn-add-to" type="button" data-toggle="dropdown" title="More Options" (click)='toggleDropdown($event)'>
+<i class="glyphicon glyphicon-option-vertical" aria-hidden="true"></i>
+</span>
+
+  <ul class="dropdown-menu" (click)='contextMenuContainerClicked($event)'>
+    <li [ngClass]="{'active': command.isExecuted}" *ngFor='let command of commands' (click)='executeCommand(command, $event)'>
+      <span>{{command.title}}</span>
+    </li>
+  </ul>
+</div>

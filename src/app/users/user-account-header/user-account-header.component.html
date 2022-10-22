@@ -1,0 +1,64 @@
+<div class="nl-artist-banner edit-image-wrap-cover" 
+    [class.editing]="coverPictureUpdateInProgress"
+    [style.background-image]="uploadedCoverPicture? 'url(' + uploadedCoverPicture?.imageUrl+ ')':  'url(' + userProfile?.coverPhoto?.imageUrl + ')'"
+    [style.background-position-y.px]="currentCoverPhotoPositionY" (mousedown)='mouseDown($event)' (mouseup)='mouseUp($event)'
+    (mousemove)='mouseMove($event)'>
+    <div class="nl-track-banner__title">
+        <div class="container">
+            <div class="profile-info">
+                <div class="profile-head-link">
+                    <div class="profile-image edit-image-wrap-profile" 
+                         [class.editing]="profilePictureUpdateInProgress">
+                        <img src="{{uploadedProfilePicture?uploadedProfilePicture.imageUrl : userProfile.profilePicture?.imageUrl}}?size=174" alt="">
+                        <nl-picture-uploader *ngIf="canEdit" [entity]='userProfile' class="btn-edit-image-profile " [toolTipText]="'Edit Profile Picture'"
+                            [setPictureService]='setUserAccountProfilePictureService' (uploadedPicture)='profilePictureUploaded($event)'
+                            [getExistingPictureService]='getUserProfilePicturesService'
+                            [existingPictureEntityIds]='existingPictureEntityIds'
+                            [imageSelectorService]='imageSelectorService'
+                            (saved)='profilePictureSaved($event)'
+                            [enableCropping]="true"
+                            [cropHeight]="profileCropHeight"
+                            [cropLength]="profileCropWidth"
+                            [cropRatio]="profileCropRatio"
+                            [defaultImage]="userProfile.profilePicture"
+                            (editing)='profilePictureWorkInProgress($event)'>
+                        </nl-picture-uploader>
+                    </div>
+                    <div class="profile-data">
+                        <h1 class="profile-title">{{userProfile.fullName}}</h1>
+                        <h4 class="profileHeaderInfo__additional">{{userProfile.address?.homeCountry }} {{userProfile.address?.homeTown }}</h4>
+
+                        <div class="profile-button-group" >
+                            <button *ngIf='canFollow' title="{{following?'Unfollow':'Follow'}}" class="btn btn-default btn-outline" (click)='toggleFollowUser()'>
+                              <span [ngClass]="{'fa fa-check': following}">  
+                              </span>
+                                  {{following?'Following':'Follow'}}
+                            </button>
+                            <button *ngIf='canMakeEditor' title="{{isEditor?'Remove as Editor':'Assign as Editor'}}" class="btn btn-default btn-outline" (click)='toggleEditorRole()'>
+                              
+                                  {{isEditor?'Remove as Editor':'Assign as Editor'}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nl-picture-uploader class="btn-edit-image-cover" *ngIf="canEdit" [entity]='userProfile' [toolTipText]="'Edit Cover Picture'"
+        [setPictureService]='setUserAccountCoverPictureService' (uploadedPicture)='coverPictureUploaded($event)' (saved)='coverPictureSaved($event)'
+        [getExistingPictureService]='getUserCoverPicturesService'
+        [existingPictureEntityIds]='existingPictureEntityIds'
+        [imageSelectorService]='imageSelectorService'
+        (saving)='savingCoverPicture($event)' [enableReposition]="true"
+        (editing)='coverPictureWorkInProgress($event)'
+        [enableCropping]="true"
+        [cropHeight]="coverCropHeight"
+        [cropLength]="coverCropWidth"
+        [cropRatio]="coverCropRatio"
+        [defaultImage]="userProfile.coverPhoto">
+    </nl-picture-uploader>
+    <div *ngIf='editingCoverPicture' class="drag-to-position">
+		<mat-icon>drag_handle</mat-icon>
+        <span>Drag to Repositon Cover</span>
+    </div>
+</div>

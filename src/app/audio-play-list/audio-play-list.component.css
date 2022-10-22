@@ -1,0 +1,107 @@
+.master-play-list {
+	width: 600px;
+	position: fixed;
+	top: auto;
+	bottom: 80px;
+	transform: translate(-50%, 0);
+	background-color: #f0f0f0;
+	box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 10px 20px 10px rgba(0, 0, 0, 0.3);
+	z-index: 999999;
+}
+.playlist-header {
+	width: 100%;
+	padding: 15px 45px 15px 15px;
+	background-color: #112146;
+	border-bottom: 1px solid #e0e0e0;
+}
+.playlist-header h3 {
+	width: 49%;
+	display: inline-block;
+	margin: 0;
+	font-size: 18px;
+	color: #fff;
+	vertical-align: middle;
+}
+.playlist-header .fa {
+	color: #fff;
+	margin-right: 5px;
+}
+.btn-group-up {
+	width: 50%;
+	display: inline-block;
+	text-align: right;
+	vertical-align: middle;
+}
+.btn-group-up .btn {
+	padding: 5px 20px;
+	margin-left: 7px;
+}
+.dialog__close-btn {
+	position: absolute;
+	top: 22px;
+	right: 15px;
+	background: url(../../assets/images/icon-cancel-white.png) no-repeat center;
+}
+.play-list-wrap {
+	height: 300px;
+	overflow-y: scroll;
+}
+.play-list-wrap .btn-remove-from {
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	position: absolute;
+	right: 37px;
+	top: 18px;
+	background: #fff none repeat scroll 0 0;
+	border: 1px solid #a6a6a6;
+	opacity: 0;
+}
+.play-list-wrap .track__holder:hover .btn-remove-from {
+	opacity: 1;
+}
+.fa.fa-times {
+	color: #a6a6a6;
+}
+
+@media (max-width: 992px) {
+.master-play-list {
+	position: fixed;
+	top: auto;
+	bottom: 120px;
+	transform: translate(-50%, 0);
+}
+}
+
+@media (max-width: 767px) {
+.master-play-list {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 40px;
+	bottom: auto;
+	left: 0;
+	box-shadow: 0 0 50px 40px rgba(0, 0, 0, 0.8), 0 10px 20px 10px rgba(0, 0, 0, 0.3);
+	transform: none;
+}
+.play-list-wrap {
+	height: 100%;
+}
+.play-list-wrap .track__list {
+	padding-bottom: 260px;
+}
+}
+
+@media (max-width: 540px) {
+.playlist-header h3 {
+	margin-bottom: 15px;
+	width: 100%;
+}
+.btn-group-up {
+	text-align: center;
+	width: 100%;
+}
+.btn-group-up .btn {
+	margin: 0 5px;
+}
+}

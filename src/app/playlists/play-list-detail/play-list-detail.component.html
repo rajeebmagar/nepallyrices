@@ -1,0 +1,97 @@
+<div class="main-content" *ngIf="playlist">
+  <nl-play-list-detail-header
+    [playlist]="playlist"
+  ></nl-play-list-detail-header>
+  <div class="nl__artists-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-lg-3">
+          <div class="nl-track-banner-info">
+            <div class="last-update">
+              <span class="first">Last update on:</span>
+              <span>{{ playlist.lastUpdatedDate | toDate | date }}</span>
+            </div>
+            <div class="contributors">
+              <h3 class="contributors-title">Contributed by:</h3>
+              <a [routerLink]="['/', playlist.owner.userName]">
+                <div class="contributors-profile">
+                  <div
+                    class="contributors-profile-img"
+                    [style.background-image]="
+                      'url(' +
+                      playlist.owner.profilePicture?.imageUrl +
+                      '?size=40)'
+                    "
+                  ></div>
+                  <span class="contributor-name">{{
+                    playlist.owner.fullName
+                  }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-6">
+          <div class="tab-content">
+            <div class="tab-pane active">
+              <div class="playlist-list-header" *ngIf="songIntros.length">
+                <div class="playlist-list-header-lt">
+                  <h3 class="block-title">
+                    <span>{{ songIntros.length }}</span> Song{{
+                      songIntros.length > 1 ? "s" : ""
+                    }}
+                  </h3>
+                </div>
+                <div class="playlist-list-header-rt">
+                  <a (click)="playAll()" class="btn btn-xs btn-text"
+                    ><i class="fa fa-play"></i> Play All</a
+                  >
+                  <a (click)="queueAll()" class="btn btn-xs btn-text"
+                    ><i class="fa fa-plus"></i> Queue All</a
+                  >
+                </div>
+              </div>
+              <div class="block-track-holder">
+                <nl-intro-list-view
+                  *ngIf="songIntros.length > 0"
+                  [contents]="
+                    songIntros
+                      | songIntroToIntroViewContent
+                        : songWithAddToQueueCommandFactory
+                        : playListSongCommandsFactoryService
+                        : playlist.id
+                  "
+                  [hasMore]="false"
+                >
+                </nl-intro-list-view>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 nl-sidebar">
+          <div class="userInfoBar__buttons show-large-screen">
+            <share-buttons
+              [tumblr]="false"
+              [reddit]="false"
+              [pinterest]="false"
+              [linkedIn]="false"
+              [count]="true"
+              [totalCount]="true"
+              [stumbleUpOn]="false"
+              [google]="false"
+              [description]="shareArgs?.description"
+              [shareTitle]="mainTitle"
+              [image]="shareArgs?.image"
+              [tags]="shareArgs?.tags"
+            ></share-buttons>
+          </div>
+          <nl-play-list-widget
+            [playListType]="'public'"
+            [enablePagination]="true"
+          >
+          </nl-play-list-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

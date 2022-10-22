@@ -1,0 +1,16 @@
+<div class="widget">
+  <div class="widget-header" *ngIf='relatedArtists?.length>0'>
+    <h3 class="widget-title">Related Artists</h3>
+    <a (click)='requestToShowAll()' class="btn btn-xs btn-text pull-right">Show All</a>
+  </div>
+  <div class="widget-content" *ngIf='relatedArtists?.length>0'>
+     <!--<ul class="nl__sidebar-track-list no-style-list">-->
+    <ul class="track__list">
+      <nl-intro-view-cell [content]='content' [thumbnailSize]="40" 
+      *ngFor='let content of relatedArtists | artistIntroToIntroViewContent
+                                              :artistWithFollowCommandFactory
+                                              :socialShareCommandsFactoryService'></nl-intro-view-cell>
+    </ul>
+    
+  </div>
+</div>

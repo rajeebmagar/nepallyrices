@@ -1,0 +1,114 @@
+<div class="contribute-page">
+  <div class="hero-contribute">
+  </div>
+  <div class="container">
+    <div class="contribute-wrap">
+      <img src="../../assets/images/contribute-background.jpg" alt="contribute-background">
+      <div class="block-heading">
+        <div class="block-heading-lt">
+          <h2 class="block-title">
+            Yay!! One More Song in
+            <span>Nepalyrics</span> Community.
+          </h2>
+        </div>
+      </div>
+      <div class="contribute-main-wrap">
+        <div class="row">
+          <div class="col-lg-7 col-sm-12">
+            <div class="contribute-form">
+              <h3>
+                Add Songs
+              </h3>
+              <div class="form-group">
+                <tag-input [(ngModel)]="newSong.singers" theme='bootstrap' placeholder='Add more singer'
+                  secondaryPlaceholder='Singer Name' [onAdding]='onAddingSinger' (onAdd)='singerAdded($event)'
+                  addTagOnEvents='[onAddingSinger]' (onRemove)='singerRemoved($event)' [onlyFromAutocomplete]="false"
+                  identifyBy='artistRoleId' displayBy='artistName' [(inputText)]="inputValue">
+                  <tag-input-dropdown [autocompleteObservable]='requestAutocompleteSingers' identifyBy='artistRoleId'
+                    displayBy='artistName'>
+                    <ng-template let-item="item" let-index="index" style="padding:5px;">
+                      <div style="display: flex; align-items: center; width: 100%;">
+                        <img *ngIf="item.profilePicture?.imageUrl"
+                          style="width: 40px; height: 40px; display: inline-block; padding: 0; margin: 0 10px 0 0;  vertical-align: top;"
+                          src="{{item.profilePicture?.imageUrl}}" alt="{{item.artistName}}">
+                        <mat-icon *ngIf="item.artistId === newArtistId" aria-hidden="false"
+                          aria-label="Add new singer icon">add</mat-icon>
+                        <span style="display: inline-block;">
+                          {{ item.artistName }}
+                        </span>
+                      </div>
+                    </ng-template>
+                  </tag-input-dropdown>
+                </tag-input>
+              </div>
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput placeholder="Song Title" [(ngModel)]="newSong.title" [formControl]="songTitleQuery">
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field>
+                  <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="8" placeholder="Song Lyrics"
+                    [(ngModel)]="newSong.lyrics" [formControl]="songLyricsQuery"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="form-group" *ngIf='validForNewSong'>
+                <button mat-fab (click)='addNewSong()'>
+                  <mat-icon>check</mat-icon>
+                </button><span class="status-info"> {{status}} </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-sm-12">
+            <div class="track__columns-box" *ngIf="possibleDuplicateSongIntros && possibleDuplicateSongIntros.length>0">
+              <div class="widget-header">
+                <h3 class="widget-title">Possible duplicate <span>Songs</span></h3>
+              </div>
+              <nl-intro-list-view *ngIf='possibleDuplicateSongIntros'
+                [contents]='possibleDuplicateSongIntros | 
+                                      songIntroToIntroViewContent:songWithAddToQueueCommandFactory:songIntroCommandsFactoryService'
+                [hasMore]='hasMorePossibleDuplicateSongIntros' (moreData)='getMorePossibleDuplicateSongIntros()'>
+              </nl-intro-list-view>
+            </div>
+            <div class="widget">
+              <div class="widget-header">
+                <h3 class="widget-title">Type in Nepali</h3>
+              </div>
+              <div class="widget-content">
+                <a class="google-link" target="_blank"
+                  href="https://chrome.google.com/webstore/detail/google-input-tools/mclkkofklkfljcocdinagocijmpgbhab">
+                  Google Input Tools - Chrome Browser
+                </a>
+              </div>
+            </div>
+            <div class="widget">
+              <div class="widget-header">
+                <h3 class="widget-title">How to Type in Nepali - Tutorial</h3>
+              </div>
+              <div class="widget-content">
+                <div class="videoWrapper">
+                  <iframe width="560" height="315" [src]="'https://www.youtube.com/embed/Quo_ro01fb0' | safeUrl"
+                    frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+            <div class="widget">
+              <div class="widget-header">
+                <h3 class="widget-title">How to contribute/add song - Tutorial</h3>
+              </div>
+              <div class="widget-content">
+                <div class="videoWrapper">
+                  <iframe width="560" height="315" [src]="'https://www.youtube.com/embed/vT7xpB0GQqM' | safeUrl"
+                    frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+            <nl-play-list-widget [playListType]="'public'" [enablePagination]="true">
+            </nl-play-list-widget>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

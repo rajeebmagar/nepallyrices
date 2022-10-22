@@ -1,0 +1,17 @@
+<div class="widget">
+  <div class="widget-header" *ngIf='playlists?.length>0'>
+    <h3 class="widget-title">{{playListType=='private' ? 'Private':'Public'}} playlists</h3>
+    <a [routerLink]="['/playlists']" class="btn btn-xs btn-text pull-right">Show All</a>
+  </div>
+  <div class="widget-content" *ngIf='playlists?.length>0'>
+    <ul class="track__list playlist-sidebar">
+      <nl-intro-view-cell [content]='content' [thumbnailSize]="40"
+      *ngFor='let content of playlists | playListToIntroViewContent
+                                        :null
+                                        :socialShareCommandsFactoryService'></nl-intro-view-cell>
+    </ul>
+    
+  </div>
+
+<a class="track_view-btn" *ngIf="hasMore" (click)="getMoreSongs()">View more</a>
+</div>

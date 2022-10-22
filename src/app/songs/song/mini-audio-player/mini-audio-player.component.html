@@ -1,0 +1,55 @@
+<div class="sound-player mini">
+    <div class="player-main-controls">
+        <div class="player-button-element">
+            <div class="player-button-wrap">
+                <button (click)='onPlayStateChanged()' class="btn glyphicon btn-sound-player" [ngClass]="{'glyphicon-pause': isPlaying, 'glyphicon-play':!isPlaying }">
+                </button>
+            </div>
+        </div>
+        <nl-audio-slider class="player-inline-status" [currentTime]='currentTime' 
+                        [duration]='duration' [bufferedTime]='bufferedTime' 
+                        (change)='seekAudioPlayerTo($event)' 
+                        (sliding)='sliding($event)'></nl-audio-slider>
+        <div class="player-button-element">
+            <div class="player-button-wrap">
+                <button *ngIf='isEditable && 
+                               !songAudio.hasKaraoke && 
+                               !songAudio.lyricKaraoke' 
+                        (click)="showKaraokePlayer()" 
+                        class="btn btn-link btn-add-karaoke"
+                        title="Add Karaoke">
+                </button>
+                <button *ngIf='songAudio.lyricKaraoke || songAudio.hasKaraoke' 
+                        (click)="showKaraokePlayer()" 
+                        class="btn btn-link btn-start-karaoke"
+                        title="Start Karaoke">
+                </button>
+            </div>
+        </div>
+        <div class="player-button-element">
+            <div class="player-button-wrap">
+                <button (click)="addToQueue()" 
+                        class="btn btn-add-queue" 
+                        title="Add To Queue">
+                        <i class="fa" aria-hidden="true"  
+                           [ngClass]="{'fa-plus':!isInQueue, 'fa-check':isInQueue}" >
+                        </i>
+                </button>
+            </div>
+        </div>
+        <div class="player-button-element">
+            <div class="player-button-wrap dropup">
+                <button class="btn btn-add-queue dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        title="More Option">
+                        <i class="glyphicon glyphicon-option-vertical" aria-hidden="true" >
+                        </i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <span (click)='addToPlayList()'>Add To Playlist</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

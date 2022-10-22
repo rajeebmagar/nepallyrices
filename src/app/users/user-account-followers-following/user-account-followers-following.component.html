@@ -1,0 +1,9 @@
+<ul class="nl_track-inline nl_songs" *ngIf='followers && followers.length>0'>
+    <li class="nl_track-list-items" *ngFor='let follower of followers'>
+        <nl-user-account-follower [followersDisplayed]="followersDisplayed" [relatedUser]='follower' [userProfile]='userProfile'></nl-user-account-follower>
+    </li>
+</ul>
+<div class="margin-tp-bt text-center">
+<a  *ngIf="hasMore" (click)="getMoreFollowers()" class="btn btn-primary btn-outline">View more</a>
+
+</div>

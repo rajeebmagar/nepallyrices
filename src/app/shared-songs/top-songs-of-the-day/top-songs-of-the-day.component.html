@@ -1,0 +1,20 @@
+<section class="home-section-default" *ngIf='topSongs'>
+    <div class="container">
+    
+    	<div class="block-heading">
+                  <div class="block-heading-lt">
+                       <h2 class="block-title">Top <span>songs</span> Of The Day</h2>
+                  </div>
+                  <div class="block-heading-rt">
+                    <a (click)='playAll()' class="btn btn-xs btn-text"><i class="fa fa-play"></i> Play All</a>
+                   <a (click)='queueAll()' class="btn btn-xs btn-text"><i class="fa fa-plus"></i> Queue All</a>
+                  </div>
+        </div>
+    
+              
+        <nl-home-slick-slider [contents]='topSongs | songIntroToIntroViewContent
+                                                     :songWithAddToQueueCommandFactory
+                                                     :songIntroCommandsFactoryService' 
+                               [name]='sliderName'></nl-home-slick-slider>
+    </div>
+</section>

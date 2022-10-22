@@ -1,0 +1,11 @@
+.new-embedded-video-wrap{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.new-embedded-video-wrap .mat-icon-button {
+    width: 100%;
+	padding: 0 10px;
+	background-color: #e0e0e0;
+    border-radius: 3px;
+    color: #333;    
+}

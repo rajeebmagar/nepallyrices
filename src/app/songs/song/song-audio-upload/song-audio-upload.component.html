@@ -1,0 +1,15 @@
+<aside class="audio-upload-wrap">
+    <h4>Please, upload the audio file for this song.</h4>
+    <label class="btn btn-primary mt-2" for="my-file-selector" *ngIf='!uploadInProgress'>
+        <input id="my-file-selector" type="file" (change)="fileChangeEvent($event)" style="display:none;"> UPLOAD AUDIO
+    </label>
+    <div *ngIf='uploadInProgress'>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                [style.width.%]="progress">
+                {{progress}}%
+            </div>
+        </div>
+        <p>Uploading Audio File...</p>
+    </div>
+</aside>

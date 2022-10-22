@@ -1,0 +1,56 @@
+<div class="comments-header">
+    <div *ngIf="user">
+        <h3 class="comments-title"><i class="fa fa-comment"></i> <a href="#">{{user.userName}}</a> leave a comment.</h3>
+    </div>
+    <div *ngIf="!user">
+        <h3 class="comments-title">
+            <a (click)="showLogin()">Log in to Nepalyrics</a> or
+            <a (click)="showRegister()">sign up</a> to leave a comment.</h3>
+    </div>
+</div>
+
+<div *ngIf="user" class="commentsList__item">
+
+    <div class="commentItem sc-media">
+        <div class="sc-media-image commentItem__avatar" [style.background-image]="'url(' + user?.profilePicture?.imageUrl+ '?size=40)'"></div>
+        <div class="commentItem__content sc-media-content">
+            <div class="commentItem__username sc-text-light form-group">{{user.userName}}</div>
+            <form [formGroup]="postCommentForm" (ngSubmit)="postComment()">
+                <textarea id="comment" name="comment" formControlName="comment" rows="4" cols="50" placeholder="place your comment here..."
+                    class="commentItem__body">
+                    </textarea>
+                <input type="submit" [disabled]="disablePostButton" class="btn btn-success pull-right" value="Post" />
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<br/>
+
+<ul class="commentsList__item-wrapper" *ngIf='comments?.length>0'>
+    <li *ngFor='let comment of comments' class="commentsList__item">
+        <div class="commentItem sc-media">
+            <div class="sc-media-image commentItem__avatar" [style.background-image]="'url(' + comment?.user?.profilePicture?.imageUrl+ '?size=40)'"></div>
+
+            <div class="commentItem__content sc-media-content">
+                <div class="commentItem__username sc-text-light form-group">{{comment.user.userName}}</div>
+                <div class="commentItem__username sc-text-light" *ngIf='!comment.edited'></div>
+                <div class="commentItem__body" *ngIf='!comment.edited'>
+                    {{comment.comment}}
+                </div>
+                <div class="commentItem__createdAt">
+                    <time class="relativeTime">
+                        <span aria-hidden="true">{{comment.moment}}</span>
+                    </time>
+                    <span *ngIf='!comment.edited && comment.user.id == user.id'  (click)="openEditer(comment)" class="glyphicon glyphicon-pencil"></span>
+                    <nl-comment-edit (editedComment)='editedComment()' *ngIf='comment.edited'   [comment]='comment'></nl-comment-edit>
+
+                    <span *ngIf='!comment.edited && (comment.user.id == user.id || isSongOwner || isEditor)' (click)="deleteComment(comment)"  class="glyphicon glyphicon-trash"></span>
+
+                </div>
+            </div>
+        </div>
+    </li>
+  <a class="track_view-btn" *ngIf="hasMore" (click)="getMoreComments()">View more</a>
+</ul>

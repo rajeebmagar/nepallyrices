@@ -1,0 +1,9 @@
+.read{
+    background-color: white;
+}
+.not-read{
+    background-color: whitesmoke;
+}
+li{
+    cursor: pointer;
+}

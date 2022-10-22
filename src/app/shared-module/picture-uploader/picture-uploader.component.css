@@ -1,0 +1,14 @@
+.mat-icon-button {
+    width: auto;
+	height: auto;
+
+    line-height: 1;
+	color: #aeaeae;
+	font-size: 12px;
+}
+.mat-icon-button:hover {
+	color: #fff;
+}
+.btn-edit-image-cover .mat-icon-button {
+	float:right;
+}

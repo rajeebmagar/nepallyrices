@@ -1,0 +1,397 @@
+<div class="main-content" *ngIf="song" (click)="resetEditingModes($event)">
+  <nl-song-header
+    [song]="song"
+    (tabSelected)="tabIndexChanged($event)"
+  ></nl-song-header>
+  <div class="nl-track-lyrics-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-lg-3">
+          <div class="nl-track-banner-info">
+            <h4 class="about-title">About This Song</h4>
+            <div class="add-inline-editor">
+              <mat-checkbox
+                *ngIf="
+                  (!song.coverSingers || song.coverSingers.length == 0) &&
+                  isEditable
+                "
+                (change)="coverSongCheckChange($event)"
+                [checked]="isCoverSong"
+                >Is Cover Song?
+              </mat-checkbox>
+            </div>
+            <div class="edit-inline-wrap" *ngIf="isCoverSong">
+              <nl-song-artists
+                *ngIf="
+                  song.coverSingers &&
+                  song.coverSingers.length > 0 &&
+                  !editCoverSingers
+                "
+                [artistsRoles]="song.coverSingers"
+                [title]="'Performed by:'"
+              >
+              </nl-song-artists>
+              <span
+                *ngIf="
+                  song.coverSingers &&
+                  song.coverSingers.length > 0 &&
+                  !editCoverSingers &&
+                  isEditable
+                "
+                class="glyphicon glyphicon-pencil"
+                (click)="editModeChangeForCoverSinger()"
+              ></span>
+              <button
+                mat-icon-button
+                (click)="editModeChangeForCoverSinger()"
+                *ngIf="
+                  (!song.coverSingers || song.coverSingers?.length == 0) &&
+                  !editCoverSingers &&
+                  isEditable
+                "
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add Performer/s</span>
+              </button>
+              <tag-input
+                (focusout)="focusOut()"
+                *ngIf="editCoverSingers && isEditable"
+                [(ngModel)]="song.coverSingers"
+                [(inputText)]="newSingerName"
+                theme="bootstrap"
+                placeholder="Add more performer"
+                secondaryPlaceholder="Add performer"
+                [onAdding]="onAddingCoverSinger"
+                (onAdd)="CoverSingerAdded($event)"
+                (onRemove)="coverSingerRemoved($event)"
+                [onlyFromAutocomplete]="false"
+                identifyBy="artistRoleId"
+                displayBy="artistName"
+              >
+                <tag-input-dropdown
+                  [autocompleteObservable]="requestAutocompleteCoverSingers"
+                  identifyBy="artistRoleId"
+                  displayBy="artistName"
+                >
+                  <ng-template let-item="item" let-index="index">
+                    <nl-tag-input-option
+                      [option]="item | artistRoleToTagInputOption"
+                    ></nl-tag-input-option>
+                  </ng-template>
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+            <div class="edit-inline-wrap">
+              <nl-song-artists
+                *ngIf="
+                  song.lyricists && song.lyricists.length > 0 && !editlyricsts
+                "
+                [artistsRoles]="song.lyricists"
+                [title]="'Written by:'"
+              ></nl-song-artists>
+              <span
+                *ngIf="song.lyricists && !editlyricsts && isEditable"
+                class="glyphicon glyphicon-pencil"
+                (click)="editModeChangeForLyricist()"
+              ></span>
+              <button
+                mat-icon-button
+                (click)="editModeChangeForLyricist()"
+                *ngIf="
+                  (!song.lyricists || song.lyricists?.length == 0) &&
+                  !editlyricsts &&
+                  isEditable
+                "
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add Lyricist/s</span>
+              </button>
+              <tag-input
+                *ngIf="editlyricsts && isEditable"
+                [(ngModel)]="song.lyricists"
+                [(inputText)]="newLyricistName"
+                theme="bootstrap"
+                placeholder="Add more lyricist"
+                secondaryPlaceholder="Add lyricist"
+                [onAdding]="onAddingLyricist"
+                (onAdd)="LyricistAdded($event)"
+                (onRemove)="lyricistRemoved($event)"
+                [onlyFromAutocomplete]="false"
+                identifyBy="artistRoleId"
+                displayBy="artistName"
+              >
+                <tag-input-dropdown
+                  [autocompleteObservable]="requestAutocompleteItemsLyricist"
+                  identifyBy="artistRoleId"
+                  displayBy="artistName"
+                >
+                  <ng-template let-item="item" let-index="index">
+                    <nl-tag-input-option
+                      [option]="item | artistRoleToTagInputOption"
+                    ></nl-tag-input-option>
+                  </ng-template>
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+            <div class="edit-inline-wrap">
+              <nl-song-artists
+                *ngIf="
+                  song.musicians && song.musicians.length > 0 && !editmusicians
+                "
+                [artistsRoles]="song.musicians"
+                [title]="'Music by:'"
+              ></nl-song-artists>
+              <span
+                *ngIf="song.musicians && !editmusicians && isEditable"
+                class="glyphicon glyphicon-pencil"
+                (click)="editModeChangeForMusicians()"
+              ></span>
+              <button
+                mat-icon-button
+                (click)="editModeChangeForMusicians()"
+                *ngIf="
+                  (!song.musicians || song.musicians?.length == 0) &&
+                  !editmusicians &&
+                  isEditable
+                "
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add Musician/s</span>
+              </button>
+              <tag-input
+                *ngIf="editmusicians && isEditable"
+                [(ngModel)]="song.musicians"
+                [(inputText)]="newMusicianName"
+                theme="bootstrap"
+                placeholder="Add more musicians"
+                secondaryPlaceholder="Add musicians"
+                [onAdding]="onAddingMusicians"
+                (onAdd)="onMusicianAdded($event)"
+                (onRemove)="onMusicianRemoved($event)"
+                [onlyFromAutocomplete]="false"
+                identifyBy="artistRoleId"
+                displayBy="artistName"
+              >
+                <tag-input-dropdown
+                  [autocompleteObservable]="requestAutocompleteItemsMusicians"
+                  identifyBy="artistRoleId"
+                  displayBy="artistName"
+                >
+                  <ng-template let-item="item" let-index="index">
+                    <nl-tag-input-option
+                      [option]="item | artistRoleToTagInputOption"
+                    ></nl-tag-input-option>
+                  </ng-template>
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+            <div class="last-update">
+              <span class="first">Last update on:</span>
+              <span>{{ song.lastUpdatedDate | toDate | date }}</span>
+            </div>
+            <div class="contributors">
+              <h3 class="contributors-title">Contributed by:</h3>
+              <a [routerLink]="['/', song.owner.userName]">
+                <div class="contributors-profile">
+                  <div
+                    class="contributors-profile-img"
+                    [style.background-image]="
+                      'url(' + song.owner.profilePicture?.imageUrl + '?size=40)'
+                    "
+                  ></div>
+                  <span class="contributor-name">{{
+                    song.owner.fullName
+                  }}</span>
+                </div>
+              </a>
+            </div>
+
+            <div class="edit-inline-wrap">
+              <div class="tag-wrap">
+                <h5>Tags:</h5>
+                <nl-comma-separated-anchors
+                  *ngIf="song.tags && song.tags.length > 0 && !edittags"
+                  [anchors]="song.tags | tagsToAnchors"
+                  [cssClasses]="'tag'"
+                  [seperator]="''"
+                >
+                </nl-comma-separated-anchors>
+                <span
+                  *ngIf="song.tags && song.tags.length > 0 && isEditable"
+                  class="glyphicon glyphicon-pencil"
+                  (click)="editModeChangeForTags()"
+                ></span>
+              </div>
+
+              <button
+                mat-icon-button
+                (click)="editModeChangeForTags()"
+                *ngIf="
+                  (!song.tags || song.tags?.length == 0) &&
+                  !edittags &&
+                  isEditable
+                "
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add Tag/s</span>
+              </button>
+              <tag-input
+                *ngIf="edittags && isEditable"
+                [(ngModel)]="song.tags"
+                [(inputText)]="newTagName"
+                theme="bootstrap"
+                placeholder="Add more tags"
+                secondaryPlaceholder="Add tag"
+                [onAdding]="onAddingTags"
+                (onAdd)="tagsAdded($event)"
+                (onRemove)="tagsRemoved($event)"
+                [onlyFromAutocomplete]="false"
+                identifyBy="tagId"
+                displayBy="name"
+              >
+                <tag-input-dropdown
+                  [autocompleteObservable]="requestAutocompleteItemsTags"
+                  identifyBy="tagId"
+                  displayBy="name"
+                >
+                  <ng-template let-item="item" let-index="index">
+                    <nl-tag-input-option
+                      [option]="item | tagToTagInputOption"
+                    ></nl-tag-input-option>
+                  </ng-template>
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-6">
+          <mat-tab-group [(selectedIndex)]="activeTabIndex">
+            <mat-tab label="Overview" class="tab-pane">
+              <div class="lyrics-wrap">
+                <inline-editor
+                  [css]="'nl-lyrics__content'"
+                  type="textarea"
+                  [(ngModel)]="song.lyric"
+                  name="lyricsContent"
+                  [rows]="getLineCount(song.lyric) + 1"
+                  cols="60"
+                  [canEdit]="isEditable"
+                  showEditButton="true"
+                  [fnErrorLength]="myHandleError"
+                  (onSave)="saveLyricsEditable($event)"
+                >
+                </inline-editor>
+              </div>
+            </mat-tab>
+            <mat-tab
+              *ngIf="relatedSongs?.length > 0 && pagedSongIntros"
+              label="Related Tracks"
+              class="tab-pane"
+            >
+              <nl-related-tracks
+                [pagedSongIntros]="pagedSongIntros"
+              ></nl-related-tracks>
+            </mat-tab>
+            <mat-tab
+              label="Comments"
+              class="tab-pane"
+              *ngIf="song.status == 'Published'"
+            >
+              <nl-comment [song]="song"></nl-comment>
+            </mat-tab>
+          </mat-tab-group>
+          <div class="show-mobile-screen">
+            <div class="contributors">
+              <h3 class="contributors-title">Contributed by:</h3>
+              <a [routerLink]="['/', song.owner.userName]">
+                <div class="contributors-profile">
+                  <div
+                    class="contributors-profile-img"
+                    [style.background-image]="
+                      'url(' + song.owner.profilePicture?.imageUrl + ')'
+                    "
+                  ></div>
+                  <span class="contributor-name">{{
+                    song.owner.fullName
+                  }}</span>
+                </div>
+              </a>
+            </div>
+            <div class="edit-inline-wrap">
+              <div class="tag-wrap">
+                <h5>Tags:</h5>
+                <nl-comma-separated-anchors
+                  *ngIf="song.tags && !edittags"
+                  [anchors]="song.tags | tagsToAnchors"
+                  [cssClasses]="'tag'"
+                  [seperator]="''"
+                >
+                </nl-comma-separated-anchors>
+                <span
+                  *ngIf="song.tags && isEditable"
+                  class="glyphicon glyphicon-pencil"
+                  (click)="editModeChangeForTags()"
+                ></span>
+              </div>
+
+              <button
+                mat-icon-button
+                (click)="editModeChangeForTags()"
+                *ngIf="!song.tags && !edittags && isEditable"
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add Tag/s</span>
+              </button>
+              <tag-input
+                *ngIf="edittags && isEditable"
+                [(ngModel)]="song.tags"
+                theme="bootstrap"
+                placeholder="Add more tags"
+                secondaryPlaceholder="Add tag"
+                [onAdding]="onAddingTags"
+                (onAdd)="tagsAdded($event)"
+                (onRemove)="tagsRemoved($event)"
+                (onBlur)="onTagInputBlur($event)"
+                [onlyFromAutocomplete]="false"
+                identifyBy="tagId"
+                displayBy="name"
+              >
+                <tag-input-dropdown
+                  [autocompleteObservable]="requestAutocompleteItemsTags"
+                  identifyBy="tagId"
+                  displayBy="name"
+                >
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 nl-sidebar nl__right-lyrics-sidebar">
+          <div class="userInfoBar__buttons" *ngIf="song.status == 'Published'">
+            <nl-share-song [song]="song"></nl-share-song>
+          </div>
+          <nl-song-audio-upload
+            *ngIf="song?.audios?.length <= 0 && isEditable"
+            [song]="song"
+          >
+          </nl-song-audio-upload>
+          <nl-embeded-videos
+            *ngIf="song?.embeddedVideos?.length > 0"
+            [isEditable]="isEditable"
+            [embeddedVideos]="song.embeddedVideos"
+          ></nl-embeded-videos>
+          <nl-new-embedded-video
+            *ngIf="song?.embeddedVideos?.length <= 0 && isEditable"
+            [song]="song"
+          >
+          </nl-new-embedded-video>
+          <nl-song-related-widget
+            *ngIf="relatedSongs"
+            [relatedSongs]="relatedSongs"
+            (showAll)="getMoreRelatedSong()"
+          ></nl-song-related-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

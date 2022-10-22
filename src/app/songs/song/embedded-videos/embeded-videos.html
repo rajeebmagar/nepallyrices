@@ -1,0 +1,14 @@
+<div class="widget iframe">
+    <div class="widget-header">
+        <h3 class="widget-title">Songs Video</h3>
+    </div>
+    <div class="widget-content">
+        <div class="videoWrapper" *ngFor='let embeddedVideo of embeddedVideos'>
+            <iframe width="560" height="315" [src]="'https://www.youtube.com/embed/'+embeddedVideo.html | safeUrl" frameborder="0" allowfullscreen></iframe>
+            <button *ngIf="isEditable" mat-icon-button (click)='remove(embeddedVideo)' class="remove-embedded-video dialog__close-btn" title="Remove Video">
+                <mat-icon>remove</mat-icon>
+        	</button>
+        </div>
+        
+    </div>
+</div>

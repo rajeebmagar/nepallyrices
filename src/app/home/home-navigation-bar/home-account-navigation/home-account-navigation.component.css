@@ -1,0 +1,106 @@
+.header-btn-wrap {
+	display: inline-block;
+	margin-right: 8px;
+	transition: all 0.3s ease-in-out 0s;
+}
+.btn-contributor {
+	height: 35px;
+	position: relative;
+	padding: 8px 20px;
+	border: none;
+	text-transform: uppercase;
+	z-index: 99;
+}
+.navbar-right.btn--group .btn i {
+	display: none;
+	font-size: 18px;
+	color: rgba(255, 255, 255, 0.6);
+}
+.navbar-right.btn--group .btn:hover i {
+	color: rgba(255, 255, 255, 1);
+}
+.badge-float {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	padding: 0;
+	left: 15px;
+	top: -15px;
+	background-color: #fa6262;
+	font-size: 11px;
+	font-weight: normal;
+	line-height: 20px;
+}
+.header__user-img.user-icon {
+	display: inline-block;
+}
+@media (max-width:1200px) {
+.header-btn-wrap button span {
+	display: none;
+}
+.btn-contributor {
+	height: auto;
+	border-radius: 100%;
+	padding: 10px 13px;
+}
+.navbar-right.btn--group .btn span {
+	display: none;
+}
+.navbar-right.btn--group .btn {
+	width: 36px;
+	height: 36px;
+	padding: 7px 4px;
+}
+.navbar-right.btn--group .btn i {
+	display: block;
+}
+.navbar-right.btn--group .btn {
+	border: none;
+}
+.navbar-right.btn--group .btn:hover {
+	background: none;
+}
+}
+
+@media (max-width:992px) {
+.header__right {
+	padding-bottom: 20px;
+	text-align: center;
+}
+}
+
+@media (max-width:767px) {
+.header__right {
+	position: absolute;
+	top: 16px;
+	right: 52px;
+}
+.navbar-right.btn--group {
+	display: inline-block;
+}
+.btn-contributor {
+	margin: 0;
+}
+.navbar-right.btn--group .btn {
+	margin: 0 0 0 5px;
+	padding: 5px 0;
+}
+.navbar-right.btn--group .btn i {
+	font-size: 24px;
+}
+}
+
+@media (max-width:480px) {
+.navbar-right.btn--group {
+	padding: 0;
+}
+}
+
+@media (max-width: 400px) {
+.header-btn-wrap {
+    margin: 0;
+}	
+.btn-contributor {
+	padding: 7px 0;
+}
+}

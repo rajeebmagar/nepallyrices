@@ -1,0 +1,13 @@
+<section class="home-section-primary" *ngIf='singers'>
+    <div class="container">
+    	<div class="block-heading">
+            <div class="block-heading-lt">
+               <h2 class="block-title">Popular <span>Singers</span></h2>
+            </div>
+        </div>
+        <nl-home-slick-slider [contents]='singers | artistIntroToIntroViewContent
+                                                    :artistWithFollowCommandFactory
+                                                    :socialShareCommandsFactoryService' 
+                               [name]='sliderName' [darkBackground]=true></nl-home-slick-slider>
+    </div>
+</section>

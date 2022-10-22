@@ -1,0 +1,79 @@
+<div class="header__right">
+  <div class="header-btn-wrap">
+    <button
+      type="button"
+      [routerLink]="['/contribute']"
+      class="btn btn-primary btn-lg btn-contributor"
+    >
+      <span style="margin-right: 5px">Contribute Song</span>
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  <div class="notification-wrap" *ngIf="notificationCount > 0">
+    <button mat-mini-fab data-toggle="dropdown" class="btn-notification">
+      <mat-icon>notifications</mat-icon>
+      <span *ngIf="unReadNotificationsCount > 0" class="badge badge-float">{{
+        unReadNotificationsCount
+      }}</span>
+    </button>
+
+    <div class="dropdown-menu notification-box">
+      <nl-notifications (markedAsRead)="markedAsRead()"></nl-notifications>
+    </div>
+  </div>
+  <div *ngIf="!user" class="navbar-right btn--group">
+    <a (click)="showLogIn()" class="btn btn-default btn-outline"
+      ><span>Sign in</span> <i class="fa fa-sign-in"></i
+    ></a>
+    <a (click)="showRegister()" class="btn btn-default btn-outline"
+      ><span>Create account</span> <i class="fa fa-user-plus"></i
+    ></a>
+  </div>
+
+  <div *ngIf="user" class="header__user-profile">
+    <a
+      [routerLink]="['/', user.userName]"
+      class="header__user-img user-icon"
+      [style.background-image]="
+        'url(' + user.profilePicture?.imageUrl + '?size=36)'
+      "
+    >
+    </a>
+    <div class="header__user-name">
+      <div
+        class="btn-user-admin"
+        data-toggle="dropdown"
+        title="More Options"
+        type="button"
+      >
+        <span>{{ user.userName }}</span>
+        <i aria-hidden="true" class="glyphicon glyphicon-menu-down"></i>
+      </div>
+      <ul class="dropdown-menu">
+        <li>
+          <a *ngIf="user" [routerLink]="['/', user.userName]">
+            <i aria-hidden="true" class="fa fa-user"></i> Profile
+          </a>
+        </li>
+        <li *ngIf="user && isAdmin" class="divider" role="separator"></li>
+        <li *ngIf="user && isAdmin">
+          <a *ngIf="user" [routerLink]="['/nlsharings']">
+            <i aria-hidden="true" class="fa fa-share-alt"></i>Sharings
+          </a>
+        </li>
+        <li class="divider" role="separator"></li>
+        <li *ngIf="isLoggedIn">
+          <a *ngIf="user" [routerLink]="['/connectexternalaccount']">
+            <i aria-hidden="true" class="fa fa-cog"></i>External Logins
+          </a>
+        </li>
+        <li class="divider" role="separator"></li>
+        <li>
+          <a (click)="logOut()"
+            ><i aria-hidden="true" class="fa fa-sign-out"></i> Sign out</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

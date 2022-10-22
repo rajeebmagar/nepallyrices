@@ -1,0 +1,25 @@
+<div class="user-like-box nl-modal" *ngIf='displayUserIntroList'>
+  <div class="like-board" [@displayUserIntroList]>
+    <header>
+      <h4>
+        <span *ngIf="pagedSongLikers && pagedSongLikers.totalCount>0">
+        <i class="fa fa-heart"></i>
+        liked by {{pagedSongLikers?.totalCount}} user{{pagedSongLikers?.totalCount>1?'s':''}}
+      </span>
+      </h4>
+    </header>
+    <div class="like-list-wrap">
+      <ul class="like-list">
+        <nl-intro-view-cell [content]='userIntro' *ngFor='let userIntro of userIntros | userIntroToIntroViewContent
+                                                  :userWithFollowCommandFactory'>
+        </nl-intro-view-cell>
+      </ul>
+    </div>
+    <div class="margin-tp-bt text-center">
+      <a *ngIf="hasMore" (click)="getMoreLikers()" class="btn btn-primary btn-outline">View more</a>
+    </div>
+  </div>
+  <button (click)="close()" aria-label="Close" class="box-close-btn"></button>
+</div>
+<div class="nl-overlay" *ngIf='displayUserIntroList' (click)="close()">
+</div>

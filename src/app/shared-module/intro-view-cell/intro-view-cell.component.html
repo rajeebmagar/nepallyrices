@@ -1,0 +1,37 @@
+<li class="track__holder" [ngClass]="{'current-playing-track':isPlaying}">
+  <div class="track__image">
+    <a routerLink="{{content.url}}">
+      <img src="{{content.thumbnailUrl}}?size={{thumbnailSize}}" alt="{{content.title}}">
+      <div class="overlay-actions">
+        <div class="overlay-action-buttons">
+          <nl-tiny-audio-player *ngIf='content.songAudio' [songAudio]='content.songAudio' (playStateChange)='changedPlayingState($event)'>
+          </nl-tiny-audio-player>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="track__description">
+    <a routerLink="{{content.url}}" class="track__title">{{content.title}}</a>
+    <nl-comma-separated-anchors class="track__artist" *ngIf='content.anchors' [anchors]='content.anchors'></nl-comma-separated-anchors>
+
+    <span *ngIf='content.subtitles'>
+        <span class="track__info" *ngFor='let subtitle of content.subtitles'>
+          {{subtitle}}
+        </span>
+    </span>
+    <nl-option-menu *ngIf='content.optionCommands' [commands]='content.optionCommands'>
+    </nl-option-menu>
+    
+    <span id='intro-view-cell-quick-command' *ngIf='content.quickCommand && content.quickCommand.command.showCommand' 
+      class="btn btn-like-fav" type="button" 
+      title="{{content.quickCommand.command.isExecuted ? 
+                content.quickCommand.command.executedTitle:
+                content.quickCommand.command.title}}"
+      
+      (click)='executeCommand()'>
+      <i class="{{content.quickCommand.command.isExecuted ? 
+                    content.quickCommand.cssForExecuted : 
+                    content.quickCommand.css}}" aria-hidden="true"></i>
+        </span>
+  </div>
+</li>

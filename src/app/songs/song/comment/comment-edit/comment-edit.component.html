@@ -1,0 +1,4 @@
+<textarea *ngIf='comment' id="comment" name="comment" rows="4" cols="50" ref-textarea [(ngModel)]="textValue" class="commentItem__body">
+                    </textarea>
+<input type="button" (click)="patchComment(textValue)" class="btn btn-success" value="Save" />
+<input type="button" (click)="cancel()" class="btn btn-default" value="Cancel" />

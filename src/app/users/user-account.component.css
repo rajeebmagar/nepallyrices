@@ -1,0 +1,77 @@
+.list-no-style {
+	list-style: none;
+	text-align: center;
+	padding: 0;
+}
+.list-no-style li {
+	list-style-type: none;
+	display: inline-block;
+	margin: 20px;
+}
+.user-widget {
+	text-align: center;
+	width: 330px;
+	height: 330px;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	border-radius: 1px;
+	padding: 10px;
+}
+.user-widget span {
+	text-align: center;
+	color: gray;
+	margin-top: 20px;
+}
+.user-widget .count {
+	width: 120px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.user-widget::after {
+	position: absolute;
+	content: "";
+	z-index: -1;
+	top: 100%;
+	bottom: 0;
+	width: 120%;
+	height: 50px;
+	left: -10%;
+	right: -10%;
+	background: -webkit-radial-gradient(50% -3%, ellipse cover, rgba(96, 251, 202, 0.8), rgba(112, 220, 255, 0.5), rgba(255, 116, 225, 0.0) 50%), -webkit-radial-gradient(80% 10%, circle contain, rgba(96, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 180%), -webkit-radial-gradient(90% 20%, circle contain, rgba(255, 255, 202, 0.8), rgba(255, 255, 255, 0.0) 60%);
+	background: radial-gradient(ellipse at 50% -3%, rgba(96, 251, 202, 0.8), rgba(112, 220, 255, 0.5), rgba(255, 116, 225, 0.0) 50%), radial-gradient(circle at 80% 10%, rgba(96, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 2%), radial-gradient(circle at 90% 20%, rgba(255, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 1%);
+}
+
+.user-detail table {
+	width: 100%;
+}
+.user-detail table tr {
+	border-bottom: 1px solid #e0e0e0;
+}
+.user-detail tr td:first-child {
+	width: 20%;
+}
+.user-detail tr td:last-child {
+    color: #a9a9a9;
+	padding-right: 0;
+}
+.user-detail td {
+	vertical-align: middle;
+}
+.user-detail table td {
+	padding: 8px 5px 8px 0;
+}
+.user-detail .glyphicon-pencil {
+	margin-left: 20px!important;
+}
+.inline-editor textarea, .inline-editor input[type="text"] {
+	width: 100%;
+}
+
+@media(max-width:767px) {
+.user-detail tr td:first-child {
+	width: 40%;
+}
+}

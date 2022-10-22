@@ -1,0 +1,9 @@
+<ul class="nl_track-inline nl_songs" *ngIf='relatedArtistIntros && relatedArtistIntros.length>0'>
+    <li class="nl_track-list-items" *ngFor='let relatedArtist of relatedArtistIntros'>
+        <nl-related-artist [relatedArtist]='relatedArtist' [relatedArtistDisplayed]="relatedArtistDisplayed" [userProfile]='userProfile' (followersChanged)="followersChanged($event)" class="related-artist-cell"></nl-related-artist>
+    </li>
+</ul>
+<div class="margin-tp-bt text-center">
+<a  *ngIf="hasMore" (click)="getMoreArtists()" class="btn btn-primary btn-outline">View more</a>
+
+</div>

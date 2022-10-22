@@ -1,0 +1,15 @@
+.comments-title .fa {
+    display: block;
+    float: left;
+    margin: 0 5px 5px 0;
+}
+
+.commentsList__item-wrapper .glyphicon{
+    margin: 0 0 0 10px;
+	color: #ddd;
+	cursor: pointer;
+}
+.commentsList__item-wrapper .glyphicon:hover{
+    color: #999;
+}
+

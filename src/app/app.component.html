@@ -1,0 +1,28 @@
+<nl-navigation-bar *ngIf="!isHome"></nl-navigation-bar>
+<router-outlet (activate)='onActivate($event)'></router-outlet>
+<nl-footer-banner></nl-footer-banner>
+<nl-footer></nl-footer>
+<nl-master-audio-player></nl-master-audio-player>
+<nl-karaoke-audio-player 
+        *ngIf='displayKaraoke && songAudioForKaraoke' 
+        [displayKaraoke]="displayKaraoke" (displayKaraokeChange)="karaokeDisplayChanged($event)"
+        [songAudio]='songAudioForKaraoke' [isLyricSynchronizing]='!songAudioForKaraoke.hasKaraoke && !songAudioForKaraoke.lyricKaraoke'>
+</nl-karaoke-audio-player>
+<nl-audio-play-list *ngIf='displayAudioPlayList' [(displayAudioPlayList)]='displayAudioPlayList'></nl-audio-play-list>
+<nl-user-account-access [(displayUserAccount)]="displayUserAccountAccess" [displayRegisterTab]='showRegisterTab'>
+</nl-user-account-access>
+<nl-add-to-play-list [(displayAddToPlaylist)]="displayAddToPlaylist" [songAudio]='songAudioForAddtoPlaylist'></nl-add-to-play-list>
+<nl-save-as-playlist [(displaySaveAsPlaylist)]="displaySaveAsPlaylist" [songAudios]='songAudiosForSaveAsPlaylist'>
+
+</nl-save-as-playlist>
+<nl-image-cropper [(displayImageCropper)]="displayImageCropper"
+                  [image]="imageForCrop" 
+                  [cropLength]="cropLength"
+                  [cropHeight]="cropHeight"
+                  [cropRatio]="cropRatio"
+                  (imageCropped)="imageCropped($event)"></nl-image-cropper>
+<nl-picture-selector [(displayImageSelector)]="displayImageSelector" 
+                     [getExistingPictureService]="getExistingPictureService"
+                     (imageSelected)="imageSelected($event)">
+</nl-picture-selector>
+<!-- <nl-notifications [notificationPositionX]="notificationPositionX" [(displayNotifications)]="displayNotifications"></nl-notifications> -->

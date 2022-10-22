@@ -1,0 +1,18 @@
+<li class="nl_track-list-items" [class.context-menu-active]="playing">
+  <div class="nl_track-items">
+    <a class="relatedArtist-image" [routerLink]="['/playlists',playlist.id]">
+                            <img #thumbnailImage src="{{playlist.profilePicture?.imageUrl}}?size={{thumbnailImageSize}}" alt="{{playlist.title}}">
+                            <p class="song-count">{{playlist.songCount}} songs</p>
+                            <div class="overlay-actions">
+                                <div class="overlay-action-buttons">
+                                    <span class="{{playing?'btn pause':'btn play'}}" (click)='playPlaylist(playlist,$event)'></span>
+                                </div>
+                            </div>
+                        </a>
+    <div class="nl_track-content">
+      <h2 class="nl_track-title"><a [routerLink]="['/playlists',playlist.id]">{{playlist.title}}</a></h2>
+      <h3 class="nl_track-subtitle">
+        <a [routerLink]="['/',playlist?.owner.userName]">By: {{playlist.owner.fullName}}</a></h3>
+    </div>
+  </div>
+</li>

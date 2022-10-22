@@ -1,0 +1,41 @@
+.btn-glyphicon {
+    padding:8px;
+    background:#ffffff;
+    margin-right:4px;
+}
+.icon-btn {
+    padding: 1px 15px 3px 2px;
+    border-radius:50px;
+}
+.ng-like-wrapper{
+    margin-bottom: 10px;
+}
+.ng-like-wrapper span{
+    cursor: pointer;
+    margin: 0 4px;
+}
+.ng-like-wrapper span:hover{
+    color: #5bc0de;
+}
+.edit-inline-wrap {
+	width: 100%;
+	position: relative;
+    margin-bottom: 10px;
+}
+.last-update {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.contributors {
+	margin: 20px 0 20px;
+}
+
+@media (max-width:1200px) {
+.nl-sidebar .userInfoBar__buttons {
+    background-color: rgba(0, 0, 0, 0.4);
+    display: block;
+    margin: 0 0 30px;
+}	
+
+}

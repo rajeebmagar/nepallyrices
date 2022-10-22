@@ -1,0 +1,46 @@
+.user-like-box {
+	width: 355px; 
+}
+.user-like-box h4 {
+    padding: 15px 15px 12px;
+	margin: 0;
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #e0e0e0;
+}
+.user-like-box  h3 {
+    margin: 0;
+    padding: 20px 15px 0;
+	color: #a9a9a9;
+    font-size: 16px;
+    text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.like-list-wrap {
+	height: 100%;
+}
+.like-board .margin-tp-bt {
+    width: 100%;
+	padding: 10px;
+    margin: 0 !important;
+    border-top: 1px solid #f0f0f0;
+}
+
+@media(max-width:767px) {
+.user-like-box {
+	position: fixed;
+	left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+}
+}
+@media(max-width:600px) {
+.user-like-box {
+	width: 90%;
+	position: absolute;
+	left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+}
+}

@@ -1,0 +1,18 @@
+<div class="song-list-header" *ngIf='pagedSongIntros && songIntros.length>0'>
+      <div class="song-list-header-lt">
+        <h3 *ngIf='title || titleSpan' class="block-title"><span>{{titleSpan}}</span> {{title}}</h3>
+        <h3 *ngIf='!title && !titleSpan' class="block-title"><span>{{pagedSongIntros?.totalCount}}</span> Song{{pagedSongIntros?.totalCount>1?'s':''}}</h3>
+      </div>
+      <div class="song-list-header-rt">
+        <a (click)='playAll()' class="btn btn-xs btn-text"> <i class="fa fa-play" _ngcontent-c1=""></i> Play All</a>
+  
+  
+        <a (click)='queueAll()' class="btn btn-xs btn-text"><i class="fa fa-plus" _ngcontent-c1=""></i> Queue All</a>
+      </div>
+</div>
+<div class="block-track-holder">
+      <nl-intro-list-view *ngIf='songIntros.length>0' [contents]='songIntros | songIntroToIntroViewContent
+                               :songWithAddToQueueCommandFactory
+                               :songIntroCommandsFactoryService' [hasMore]='hasMore && showMore' (moreData)='getMoreSongs()'>
+      </nl-intro-list-view>
+</div>

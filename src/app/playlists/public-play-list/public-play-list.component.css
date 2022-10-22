@@ -1,0 +1,100 @@
+#playlist-page {
+	padding: 112px 0 40px;
+	background: #fff;
+}
+.nl_track-inline {
+	margin: 0 -20px 0 0;
+	text-align: left;
+}
+.nl_track-list-items {
+	display: inline-block;
+	margin: 0 10px 20px;
+	vertical-align: top;
+}
+.relatedArtist-image {
+	width: 173px;
+	height: 173px;
+	background: url(../../../assets/images/default-album.png) no-repeat center;
+	background-size: cover;
+	border-radius: 8px;
+	border: none;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.17) inset;
+	position: relative;
+	overflow: visible;
+}
+/*.relatedArtist-image:before {
+	content: "";
+	position: absolute;
+	top: -12px;
+	right: -12px;
+	 bottom: -12px;
+    left: -12px;
+	background: url(../../assets/images/playlist-bg.png) no-repeat center;
+	background-size: 228px;
+}*/
+.relatedArtist-image img {
+	max-width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 8px;
+	z-index: 9;
+}
+.nl_track-title, .nl_track-subtitle {
+	width: 173px;
+	display: block;
+	margin-bottom: 5px;
+	color: #a9a9a9;
+	text-align: left;
+}
+.nl_track-title a {
+	color: #000;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.nl_track-subtitle a:hover {
+	color: #000;
+}
+.nl_track-subtitle a {
+	color: #a9a9a9;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.relatedArtist-image:hover .overlay-actions {
+	opacity: 1;
+}
+.meta {
+	margin: 0;
+	color: #a9a9a9;
+	font-size: 12px;
+	text-align: left;
+	line-height: 1;
+}
+
+@media (max-width: 1200px) {
+.artist-list {
+	display: inline-block;
+	float: none;
+}
+}
+
+@media (max-width: 768px) {
+#playlist-page {
+	padding: 120px 0 40px;
+}	
+.relatedArtist-image {
+	width: 135px;
+	height: 135px;
+}
+.nl_track-title, .nl_track-subtitle {
+	width: 135px;
+}
+.nl_track-inline {
+	margin: 0 -2% 0 0;
+}
+}
